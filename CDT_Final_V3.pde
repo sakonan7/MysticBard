@@ -70,6 +70,7 @@ PImage HP;
 PImage HPdamage;
 
 PImage tutorialV;
+PImage bardEnd;
 
 //Foe sizes
 float foe1SizeX;
@@ -324,6 +325,7 @@ boolean messageOver = false;
 boolean victory = false;
 boolean tutorialVictory = false;
 boolean tutorialConclude = false;
+boolean musicCredits = false;
 
 PFont Font1;
 PFont Font2;
@@ -408,6 +410,7 @@ void setup() {
   HPdamage = loadImage("damage.png");
   
   tutorialV = loadImage("victory.jpg");
+  bardEnd = loadImage("bardEnd.png");
   
   //control background music here
   
@@ -519,31 +522,52 @@ void draw() {
     //takes you back to the beginning
   }
   if (tutorialConclude == true) {
+    //Play title music
+    
     fill(#000096);
     rect(25, 25, width - 50, height - 50);
     textSize(50);
     textFont(Font2);
     fill(#FFFFFF);
-    text("Tutorial End" + "\n", 50, height - height + 90);     
-    textFont(Font3);
+    text("Thank You For Playing" + "\n", 50, height - height + 90);     
+    textFont(Font1);
     fill(#FFFFFF);
-    text("Thank You For Playing" + "\n", 50, height - height + 150);
+    text("Stay Tuned For More Updates" + "\n", 50, height - height + 150);
     //Text
     textSize(35);
     textFont(Font1);
     fill(#FFF300);
-    //text(leftClick, 50, height - height + 70); 
     fill(#FFFFFF);
-    text("Stay tuned for more updates", 50, 210);
     
-    //image(tromboneD, 160, 250, 244, 156);
-    //800//593
-    image(tutorialV, 230, 250, 625, 463);
+    image(bardEnd, 180, 190, 742, 590);
     fill(#FFF300);
     textFont(Font1);
-    //text("\n" + "\n" + "Click Right to Proceed", width - 375, height - 165);
     text("\n" + "\n" + "Click Right for Music Credits", width - 465, height - 165);     
   }
+  if (musicCredits == true) {
+    fill(#000096);
+    rect(25, 25, width - 50, height - 50);
+    textSize(50);
+    textFont(Font2);
+    fill(#FFFFFF);
+    //center text
+    //move 100 down
+    text("Music" + "\n", 500, 500);     
+    textFont(Font1);
+    fill(#FFFFFF);
+    ///Reclamation by Yuka Tsujiyoko
+    text("Battle 1 (Final Fantasy IV) by Nobuo Uematsu", 50, height - height + 150);
+    //Text
+    textSize(35);
+    textFont(Font1);
+    fill(#FFF300);
+    fill(#FFFFFF);
+    
+    image(bardEnd, 180, 190, 742, 590);
+    fill(#FFF300);
+    textFont(Font1);
+    text("\n" + "\n" + "Click Right for Music Credits", width - 465, height - 165);     
+  }  
   if (victory == true) {
     fill(#0035FF);
     stroke(#98FFFC);
