@@ -69,6 +69,8 @@ PImage attack;
 PImage HP;
 PImage HPdamage;
 
+PImage tutorialV;
+
 //Foe sizes
 float foe1SizeX;
 float foe1SizeY;
@@ -321,6 +323,7 @@ boolean messageOver = false;
 
 boolean victory = false;
 boolean tutorialVictory = false;
+boolean tutorialConclude = false;
 
 PFont Font1;
 PFont Font2;
@@ -404,6 +407,8 @@ void setup() {
   HP = loadImage("HP.png");
   HPdamage = loadImage("damage.png");
   
+  tutorialV = loadImage("victory.jpg");
+  
   //control background music here
   
   //minim = new Minim(this);
@@ -481,30 +486,28 @@ void draw() {
   if (tutorialVictory == true) {
     fill(#000096);
     rect(25, 25, width - 50, height - 50);
-    //Text
     textSize(50);
-    fill(#FFFFFF);
-    //only need to do stroke once
-    stroke(#98FFFC);
-    strokeWeight(3);
     textFont(Font2);
-    text("Victory" + "\n", 50, height - height + 90);
-    //decrease font to 40 for next line
-    //shrink font here
-    
+    fill(#FFFFFF);
+    text("Victory" + "\n", 50, height - height + 90);     
+    textFont(Font3);
+    fill(#FFFFFF);
+    text("Congratulations!!" + "\n", 50, height - height + 150);
+    //Text
     textSize(35);
     textFont(Font1);
-    text("Congratulations!!" + 
-    "\n" + "You have defeated your first enemy! But the battle has" + 
-    "\n" + "just begun", 50, height - height + 170);
     fill(#FFF300);
-    text("\n" + "\n" + clickRight, width - 435, height - 170);
+    //text(leftClick, 50, height - height + 70); 
+    fill(#FFFFFF);
+    text("You have defeated your first enemy! But the battle has just begun", 50, 210);
     
-    //You have defeated the enemy!
-    //hapy village
-    //But the battle has just begun
-    //Your true opposition hasn't come yet
-    //The true challenge has yet to come
+    //image(tromboneD, 160, 250, 244, 156);
+    //800//593
+    image(tutorialV, 230, 250, 625, 463);
+    text("The true challenge is yet to come", 50, 772); 
+    fill(#FFF300);
+    textFont(Font1);
+    text("\n" + "\n" + clickRight, width - 385, height - 165);   
     
     //Thank you for playing
     //Bard
@@ -512,9 +515,35 @@ void draw() {
     //see you next time boolean
     //Music
     //
+    //Click Righ to go back to the title screen
     //takes you back to the beginning
   }
-
+  if (tutorialConclude == true) {
+    fill(#000096);
+    rect(25, 25, width - 50, height - 50);
+    textSize(50);
+    textFont(Font2);
+    fill(#FFFFFF);
+    text("Tutorial End" + "\n", 50, height - height + 90);     
+    textFont(Font3);
+    fill(#FFFFFF);
+    text("Thank You For Playing" + "\n", 50, height - height + 150);
+    //Text
+    textSize(35);
+    textFont(Font1);
+    fill(#FFF300);
+    //text(leftClick, 50, height - height + 70); 
+    fill(#FFFFFF);
+    text("Stay tuned for more updates", 50, 210);
+    
+    //image(tromboneD, 160, 250, 244, 156);
+    //800//593
+    image(tutorialV, 230, 250, 625, 463);
+    fill(#FFF300);
+    textFont(Font1);
+    //text("\n" + "\n" + "Click Right to Proceed", width - 375, height - 165);
+    text("\n" + "\n" + "Click Right for Music Credits", width - 465, height - 165);     
+  }
   if (victory == true) {
     fill(#0035FF);
     stroke(#98FFFC);
@@ -1113,7 +1142,7 @@ void draw() {
         violinDrained = false;
       }
 
-      text(violinReplenishtime, width/2, height - 200);
+      //text(violinReplenishtime, width/2, height - 200);
     }
     if (tromboneDrained == true) {
       tromboneReplenisht = tromboneReplenish-int(millis()/1000);
@@ -1125,7 +1154,7 @@ void draw() {
         tromboneDrained = false;
       }
 
-      text(tromboneReplenishtime, width/2, height - 200);
+      //text(tromboneReplenishtime, width/2, height - 200);
     }        
         
         //int millis keeps getting bigger
@@ -1139,7 +1168,7 @@ void draw() {
       shieldReplenishtime = nf(shieldReplenisht, 3);
           //temp1 = shieldReplenish;
           //temp2 = shieldReplenisht;
-      text(shieldReplenisht, width/2, height - 200);
+      //text(shieldReplenisht, width/2, height - 200);
           //I think the timer goes to fast for this
       if(shieldReplenisht > 0) {
         shieldBar += originalShieldBar/5;
@@ -1973,14 +2002,36 @@ void mousePressed () {
     }     
     else if (mouseButton == RIGHT && messageLast == true) {
       messageLast = false;
-      messageOver = true;
-      tutorialStage = true;
-      println("over");
+      tutorialVictory = true;
+      //messageOver = true;
+      //tutorialStage = true;
+      //println("over");
     }  
     else if (mouseButton == LEFT && messageLast == true) {
       messageLast = false;
       messageInterupt = true;
-    }       
+    }
+    
+    else if (mouseButton == RIGHT && tutorialVictory == true) {
+      tutorialVictory = false;
+      tutorialConclude = true;
+    }  
+    else if (mouseButton == LEFT && tutorialVictory == true) {
+      tutorialVictory = false;
+      messageLast = true;
+    }    
+    else if (mouseButton == RIGHT && tutorialConclude == true) {
+      tutorialConclude = false;
+      messageOver = true;
+      tutorialStage = true;
+      println("over");
+    }  
+    else if (mouseButton == LEFT && tutorialConclude == true) {
+      tutorialConclude = false;
+      tutorialVictory = true;
+    }    
+    //make new click Right when battle is won
+    //choice to restart game from start
   }
    
   //main game
@@ -2080,6 +2131,16 @@ void mousePressed () {
               println("play");
               foeTattacked = false;
             }
+            if (shield == true) {
+              shield = false;
+              //shieldInterval += 3; //i think the way millis works is that in increases over time
+              //also need to add cases for if the countdown jasn't ended yet
+              //if if shieldt = 1, add only 2 and if shieldt = 2, add only one
+              if (shieldt == 1) {
+                shieldInterval += 2;
+              }
+            }            
+            
             if (tromboneBar == 0) {
               tromboneDrained = true;
               tromboneReplenish = int(millis()/1000) + 15;
