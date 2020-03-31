@@ -122,7 +122,7 @@ int foeT2HP = 150;
 int foeT3HP = 150;
 int playerHP = 100;
 
-int damage = 10;
+int damage = 150;
 int tromboneDamage = 0;//15
 //int big damage
 float HPbar = 600;
@@ -323,9 +323,13 @@ boolean messageLast = true;
 boolean messageOver = false;
 
 boolean victory = false;
+
 boolean tutorialVictory = false;
+
+boolean tutorialVictoryPage = false;
 boolean tutorialConclude = false;
 boolean musicCredits = false;
+boolean tutorialDead = false;
 
 PFont Font1;
 PFont Font2;
@@ -486,12 +490,17 @@ void draw() {
   String clickRight = "Click Right to Continue";
   String clickLeft = "Click Left to Go Back";
   String clickSkip = "S to Skip";
-  if (tutorialVictory == true) {
+  if (tutorialVictoryPage == true) {
     fill(#000096);
     rect(25, 25, width - 50, height - 50);
     textSize(50);
     textFont(Font2);
     fill(#FFFFFF);
+    
+    stroke(#98FFFC);
+    strokeWeight(3);
+    textFont(Font2);
+    
     text("Victory" + "\n", 50, height - height + 90);     
     textFont(Font3);
     fill(#FFFFFF);
@@ -552,27 +561,37 @@ void draw() {
     fill(#FFFFFF);
     //center text
     //move 100 down
-    text("Music" + "\n", 500, 500);     
+    text("Music" + "\n", 420, 305);     
     textFont(Font1);
     fill(#FFFFFF);
-    ///Reclamation by Yuka Tsujiyoko
-    text("Battle 1 (Final Fantasy IV) by Nobuo Uematsu", 50, height - height + 150);
+    ///Title Theme
+    text("Title Theme (Final Fantasy I) by Nobuo Uematsu", 200, 315);
+    text("Reclamation (Fire Emblem: Shadow Dragon)", 225, 365);
+    text("by Yuka Tsujiyoko", 410, 415);
+    text("Battle 1 (Final Fantasy IV) by Nobuo Uematsu", 220, 465);
+    text("Victory (Final Fantasy VII) by Nobuo Uematsu", 220, 515);
+    text("Dead Music (Final Fantasy I) by Nobuo Uematsu", 200, 565);
     //Text
     textSize(35);
     textFont(Font1);
     fill(#FFF300);
     fill(#FFFFFF);
     
-    image(bardEnd, 180, 190, 742, 590);
     fill(#FFF300);
     textFont(Font1);
-    text("\n" + "\n" + "Click Right for Music Credits", width - 465, height - 165);     
+    //text("\n" + "\n" + "Click Right for Music Credits", width - 465, height - 165); 
+    text("\n" + "\n" + "Click Right to Go to Title Screen", width - 520, height - 165);
   }  
   if (victory == true) {
     fill(#0035FF);
     stroke(#98FFFC);
     strokeWeight(3);
     rect(50, 50, width - 100, height - 100, 9);
+    
+    stroke(#98FFFC);
+    strokeWeight(3);
+    textFont(Font2);
+    
     //image();
     image(treasure, width/2, height/2, 400, 300);
     
@@ -594,6 +613,11 @@ void draw() {
     //Text
     textSize(50);
     fill(#FFFFFF);
+    
+    stroke(#98FFFC);
+    strokeWeight(3);
+    textFont(Font2);
+    
     text("GAME OVER" + 
     "\n" + "You were defeated and the village" + "\n" + "was overrun by monsters.", 70, height - height + 120);
     fill(#FFF300);
@@ -601,7 +625,58 @@ void draw() {
     //Click left to start over
     //reset values
   } 
-  
+  if (tutorialDead == true) {
+    fill(#0035FF);
+    stroke(#98FFFC);
+    strokeWeight(3);
+    rect(50, 50, width - 100, height - 100, 9);
+    //image();
+    //Text
+    textSize(50);
+    fill(#FFFFFF);
+    
+    stroke(#98FFFC);
+    strokeWeight(3);
+    textFont(Font2);
+    
+    text("GAME OVER" + 
+    "\n" + "You Died", 70, height - height + 120);
+    fill(#FFF300);
+    //indicator to clickRight to continue
+    //Click left to start over
+    //reset values
+    
+    //new code
+    fill(#000096);
+    rect(25, 25, width - 50, height - 50);
+    textSize(50);
+    textFont(Font2);
+    fill(#FFFFFF);
+    
+    stroke(#98FFFC);
+    strokeWeight(3);
+    textFont(Font2);
+    
+    text("Game Over" + "\n", 50, height - height + 90);     
+    textFont(Font3);
+    fill(#FFFFFF);
+    text("You Died", 50, height - height + 150);
+    //Text
+    textSize(35);
+    textFont(Font1);
+    fill(#FFF300);
+    //text(leftClick, 50, height - height + 70); 
+    fill(#FFFFFF);
+    text("You have defeated your first enemy! But the battle has just begun", 50, 210);
+    
+    //image(tromboneD, 160, 250, 244, 156);
+    //800//593
+    image(tutorialV, 230, 250, 625, 463);
+    //text("The true challenge is yet to come", 50, 772); 
+    fill(#FFF300);
+    textFont(Font1);
+    text("\n" + "\n" + clickRight, width - 385, height - 165);    
+  }  
   //tutorial messages
   //wrap this in an if statement messageOer = false so I can cancel it with
   //a button press
@@ -617,6 +692,7 @@ void draw() {
     stroke(#98FFFC);
     strokeWeight(3);
     textFont(Font2);
+    
     text("Mystic Bard" + "\n", 50, height - height + 90);
     //decrease font to 40 for next line
     //shrink font here
@@ -1043,6 +1119,7 @@ void draw() {
     stroke(#98FFFC);
     strokeWeight(3);
     textFont(Font2);
+    
     text("Battle" + "\n", 50, height - height + 90);     
     textFont(Font3);
     fill(#FFFFFF);
@@ -1223,7 +1300,8 @@ void draw() {
         //not properly overlaying damaged screen over 
         //draw the enemies and background then the red screen
         //wait, i did
-        //-30
+        //-30       
+        
       image(background, 0, -40, width, height);
         //use if cases to display foes
       if (tutorialStage == true) {
@@ -1245,7 +1323,8 @@ void draw() {
       }
                  
         //red filter
-      fill(117,0,0,155);
+        //155
+      fill(117,0,0,145);
       stroke(#FFFFFF);
           
       rect(0, 1, 1099, 898);        
@@ -1308,7 +1387,7 @@ void draw() {
         //playerDamaged = false;
         
         //resetting values for whether foe attacked
-      println(damage);
+      //println(damage);
       if (foe1Attack == true) {
         foe1Attack = false;
       }
@@ -1351,8 +1430,7 @@ void draw() {
     if (foeTAttack == true) {
         //maybe do animation here
         //feed from foe boolean
-        //why does it keep looping here?
-        
+        //why does it keep looping here?  
       stroke(#FFFFFF);
         
       foeTwhitet = foeTwhiteint-int(millis()/1000);
@@ -1419,7 +1497,9 @@ void draw() {
                   //image(foe1, foe1CoordX, foe1CoordY - 30, foe1SizeX, foe1SizeY);
                 
                 playerAttacked = true;
-                println("hit"); //not playing at all                  
+                //foeT2disapp = true;
+                //foeT3disapp = true;
+                //println("hit"); //not playing at all                  
                     
                 foeTinterval = int(millis()/1000) + 5;
                     //do I still need these
@@ -1446,8 +1526,8 @@ void draw() {
         foeTflashint = int(millis()/1000) + 3;
         foeTredint = int(millis()/1000) + 3; //maybe feed more
         foeTflash2int = int(millis()/1000) + 3;
-        println("refilled");
-        println(foeTInterupt);
+        //println("refilled");
+        //println(foeTInterupt);
       }
     }      
 
@@ -1705,9 +1785,15 @@ void draw() {
           //checked playerAttacked to see if booleans are resolved
           //enemies also reappear too fast
           //use booleans to determine whether they disappear or not
+          //try justplayerAttacked to do this
+          //actually no, because disapp works for shield and blocked
         if (foeTdisapp == false) {
           image(foetutorial, foetutorialX, foetutorialY, foetutorialSizeX, foetutorialSizeY);
         } 
+        //foeTAttack == false
+        //if (foeTAttack == false) {
+          //image(foetutorial, foetutorialX, foetutorialY, foetutorialSizeX, foetutorialSizeY);
+        //}      
         if (foeTAttack == false) {
             //foe1interval is always 0
             //feed white and red here?
@@ -1735,15 +1821,17 @@ void draw() {
             //before attack animations
             foeTAttack = true;
           }
-            //if case where if playerAttacked, enemy adjusted
-            //may not need to do that for shield == false then
-            //only the red filter part
-            //for if another enemy attacks
-
         } 
-        if (playerAttacked == true) {
-          foeTdisapp = true;
-        }
+        //if (playerAttacked == true) {
+          //foeTdisapp = true;
+        //}
+        //decrease opacity 
+        //if (playerAttacked == true) {
+                //fill(117,0,0,155);
+      //stroke(#FFFFFF);
+          
+      //rect(0, 1, 1099, 898);
+        //}
 
       }   
       if(foeT2Alive == true) {
@@ -1752,12 +1840,14 @@ void draw() {
           //stroke(#FFF700);
           //rect(foeT2X - 140, foeT2Y - 140, foeT2SizeX + 280, foeT2SizeY + 280);
           //noFill();  
+          //maybe for other foe attacks && (foeTattack == false && foeT2Attack = false)
+          //that way, only one has to be true
         if (foeT2disapp == false) {
           image(foeT2, foeT2X, foeT2Y, foeT2SizeX, foeT2SizeY);
         }
-        if (playerAttacked == true) {
-          foeT2disapp = true;
-        }
+        //if (playerAttacked == true) {
+          //foeT2disapp = true;
+        //}
 
       }
       if(foeT3Alive == true) {
@@ -1769,9 +1859,9 @@ void draw() {
         if (foeT3disapp == false) {
           image(foeT3, foeT3X, foeT3Y, foeT3SizeX, foeT3SizeY);
         } 
-        if (playerAttacked == true) {
-          foeT3disapp = true;
-        }
+        //if (playerAttacked == true) {
+          //foeT3disapp = true;
+        //}
       
       }        
     }
@@ -1896,6 +1986,11 @@ void keyPressed () {
     messageAttacked = false;
     messageInterupt = false;
     messageLast = false;
+    
+    //tutorialVictory = false;
+    //tutorialConclude = false;
+    //musicCredits = false;
+    
     messageOver = true;
     tutorialStage = true;
     println("skipped");
@@ -1919,6 +2014,7 @@ void mousePressed () {
   //Playing the tutorial messages
   //only determine booleans
   if (messageOver == false) {
+    //make one for title
     if (mouseButton == RIGHT && message1 == true) {
       message1 = false;
       message2 = true;
@@ -2026,36 +2122,15 @@ void mousePressed () {
     }     
     else if (mouseButton == RIGHT && messageLast == true) {
       messageLast = false;
-      tutorialVictory = true;
-      //messageOver = true;
-      //tutorialStage = true;
-      //println("over");
-    }  
-    else if (mouseButton == LEFT && messageLast == true) {
-      messageLast = false;
-      messageInterupt = true;
-    }
-    
-    else if (mouseButton == RIGHT && tutorialVictory == true) {
-      tutorialVictory = false;
-      tutorialConclude = true;
-    }  
-    else if (mouseButton == LEFT && tutorialVictory == true) {
-      tutorialVictory = false;
-      messageLast = true;
-    }    
-    else if (mouseButton == RIGHT && tutorialConclude == true) {
-      tutorialConclude = false;
+      //tutorialVictory = true;
       messageOver = true;
       tutorialStage = true;
       println("over");
     }  
-    else if (mouseButton == LEFT && tutorialConclude == true) {
-      tutorialConclude = false;
-      tutorialVictory = true;
-    }    
-    //make new click Right when battle is won
-    //choice to restart game from start
+    else if (mouseButton == LEFT && messageLast == true) {
+      messageLast = false;
+      messageInterupt = true;
+    }   
   }
    
   //main game
@@ -2066,7 +2141,7 @@ void mousePressed () {
   else if (messageOver == true && playerAlive == true) {
     if (mouseButton == RIGHT && shieldDrained == false && shield == false) {
     //light milky green and no screenshake
-      println(monsterViolin + " violin");
+      //println(monsterViolin + " violin");
       if ((mouseX <= width && mouseX > 0) && (mouseY <= height && mouseY > 0)) {
         shieldInterval = int(millis()/1000) + 2; //one action, feeds next countdown before
         //it begins
@@ -2095,7 +2170,7 @@ void mousePressed () {
         currentShieldBarX += originalShieldBar/2;
         if (shieldBar == 0) {
           shieldDrained = true;
-          println(0);
+          //println(0);
           //add to shieldreplenish here
           shieldReplenish = int(millis()/1000) + 5 + 3; //feeding value so that when
           //countdown starts, it's always a count of 5 top 0
@@ -2483,122 +2558,7 @@ void mousePressed () {
               monsterViolin = true;
             }            
           }
-          
-          //for stage1
-          if (stage1 == true) {
-            if (mouseX <= foe1SizeX + foe1CoordX && mouseX >= foe1CoordX
-            && (mouseY <= foe1SizeY + foe1CoordY && mouseY >= foe1CoordY) && foe1Alive) { 
-            //damage spasm
-              image(foe1, foe1CoordX - 10, foe1CoordY - 40, foe1SizeX * 1.1, foe1SizeY * 1.1);
-          
-          //Music Notes
-              image(musicNote1, foe1CoordX + foe1SizeX/5, foe1CoordY - foe1CoordY/10, 100, 100);
-      
-          //sound waves
-              noFill();
-              strokeWeight(5);
-          //make new shades
-              stroke(damageWave);
-              ellipse(cursorX, cursorY, 140, 140);
-              ellipse(cursorX, cursorY , 100, 100);
-              ellipse(cursorX, cursorY , 50, 50);
-      
-              foe1HP -= damage;
-              textSize(32);
-              //make text bolder
-              text("  " + damage, foe1CoordX + foe1SizeX/4, foe1CoordY - foe1CoordY/11);
-              fill(#E505FF);
-            //maybe do this if flash2 didn't reach zero yet
-              foe1attacked = true;
-              monsterViolin = true;
-            }
-          //foe2
-            if (mouseX <= foe2SizeX + foe2CoordX && mouseX >= foe2CoordX
-            && (mouseY <= foe2SizeY + foe2CoordY && mouseY >= foe2CoordY) && foe2Alive) {
-
-              image(foe2, foe2CoordX - 10, foe2CoordY - 40, foe2SizeX * 1.1, foe2SizeY * 1.1);
-          
-            //Music Notes
-              image(musicNote1, foe2CoordX + foe2SizeX/5, foe2CoordY - foe2CoordY/10, 100, 100);
-      
-            //sound waves
-              noFill();
-              strokeWeight(5);
-              stroke(damageWave);
-              ellipse(cursorX, cursorY, 140, 140);
-              ellipse(cursorX, cursorY , 100, 100);
-              ellipse(cursorX, cursorY , 50, 50);
-      
-              foe2HP -= damage;
-              textSize(32);
-              text("  " + damage, foe2CoordX + foe2SizeX/4, foe2CoordY - foe2CoordY/11);
-              fill(#E505FF);
-              monsterViolin = true;
-            }
-          //foe3
-            if (mouseX <= foe3SizeX + foe3CoordX && mouseX >= foe3CoordX
-            && (mouseY <= foe3SizeY + foe3CoordY && mouseY >= foe3CoordY) && foe3Alive) {
-          
-          //accidentally got rid of enemy spasm
-              image(foe3, foe3CoordX - 10, foe3CoordY - 40, foe3SizeX * 1.1, foe3SizeY * 1.1);
-              image(musicNote1, foe3CoordX + foe3SizeX/5, foe3CoordY - foe3CoordY/10, 100, 100);
-            //sound waves
-              noFill();
-              strokeWeight(5);
-              stroke(damageWave);
-              ellipse(cursorX, cursorY, 140, 140);
-              ellipse(cursorX, cursorY , 100, 100);
-              ellipse(cursorX, cursorY , 50, 50);
-          
-              foe3HP -= damage;
-              textSize(32);
-              text("  " + damage, foe3CoordX + foe3SizeX/4, foe3CoordY - foe3CoordY/11);
-              fill(#E505FF);
-              monsterViolin = true;
-            }
-          //foe4
-            if (mouseX <= foe4SizeX + foe4CoordX && mouseX >= foe4CoordX
-            && (mouseY <= foe4SizeY + foe4CoordY && mouseY >= foe4CoordY) && foe4Alive) {
-          
-            //accidentally got rid of enemy spasm
-              image(foe4, foe4CoordX - 10, foe4CoordY - 40, foe4SizeX * 1.1, foe4SizeY * 1.1);
-              image(musicNote1, foe4CoordX + foe4SizeX/5, foe4CoordY - foe4CoordY/10, 100, 100);
-            //sound waves
-              noFill();
-              strokeWeight(5);
-              stroke(damageWave);
-              ellipse(cursorX, cursorY, 140, 140);
-              ellipse(cursorX, cursorY , 100, 100);
-              ellipse(cursorX, cursorY , 50, 50);
-          
-              foe4HP -= damage;
-              textSize(32);
-              text("  " + damage, foe4CoordX + foe4SizeX/4, foe4CoordY - foe4CoordY/11);
-              fill(#E505FF);
-              monsterViolin = true;
-            }
-          //foe5
-            if (mouseX <= foe5SizeX + foe5CoordX && mouseX >= foe5CoordX
-            && (mouseY <= foe5SizeY + foe5CoordY && mouseY >= foe5CoordY) && foe5Alive) {
-          
-            //accidentally got rid of enemy spasm
-              image(foe5, foe5CoordX - 10, foe5CoordY - 40, foe5SizeX * 1.1, foe5SizeY * 1.1);
-              image(musicNote1, foe5CoordX + foe5SizeX/5, foe5CoordY - foe5CoordY/10, 100, 100);
-            //sound waves
-              noFill();
-              strokeWeight(5);
-              stroke(damageWave);
-              ellipse(cursorX, cursorY, 140, 140);
-              ellipse(cursorX, cursorY , 100, 100);
-              ellipse(cursorX, cursorY , 50, 50);
-          
-              foe5HP -= damage;
-              textSize(32);
-              text("  " + damage, foe5CoordX + foe5SizeX/4, foe5CoordY - foe5CoordY/11);
-              fill(#E505FF);
-              monsterViolin = true;
-            }            
-          }
+          //stage1  
         }
       }
       if(foe1HP <= 0) {
@@ -2630,6 +2590,7 @@ void mousePressed () {
       //if foeTAlive == false && playerAlive == true;
       if (foeTAlive == false && foeT2Alive == false && foeT3Alive == false && playerAlive == true) {
         tutorialVictory = true;
+        tutorialVictoryPage = true;
         playerAlive = false; //get rid of HPbar and Die button
       //minim.stop();
 
@@ -2637,7 +2598,7 @@ void mousePressed () {
         player3 = minim3.loadFile("Victory.mp3", 1000);
         player3.play();    
         player3.shiftGain(player3.getGain(),-10,FADE);
-        player3.loop();      
+        player3.loop();          
       }      
         
       if (playerHP <= 0 && stage1 == true) {
@@ -2675,7 +2636,29 @@ void mousePressed () {
       }  
     }
   }
-
+  else if (tutorialVictory == true) {
+        if (mouseButton == RIGHT && tutorialVictoryPage == true) {
+          tutorialVictoryPage = false;
+          tutorialConclude = true;
+        }    
+        else if (mouseButton == RIGHT && tutorialConclude == true) {
+          tutorialConclude = false;
+          musicCredits = true;
+        //messageOver = true;
+        //tutorialStage = true;
+        //println("over");
+        }  
+        else if (mouseButton == LEFT && tutorialConclude == true) {
+          tutorialConclude = false;
+          tutorialVictoryPage = true;
+        }   
+        else if (mouseButton == LEFT && musicCredits == true) {
+          musicCredits = false;
+          tutorialConclude = true;
+        }         
+        //for musicCredits, clicking right will cancel tutorial Victory and
+        //do resets
+  }
 
 }
 void setGradient(int x, int y, float w, float h, color c1, color c2, int axis ) {
