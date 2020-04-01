@@ -490,6 +490,16 @@ void draw() {
   String clickRight = "Click Right to Continue";
   String clickLeft = "Click Left to Go Back";
   String clickSkip = "S to Skip";
+  if (tutorialDead == true) {
+    //music is getting distorted
+    //need to do in mousePressed instead
+      //Game Over music
+    minim3 = new Minim(this);
+    player3 = minim3.loadFile("death.mp3", 1000);
+    player3.play();    
+    player3.shiftGain(player3.getGain(),-15,FADE);
+    player3.loop();    
+  }
   if (tutorialVictoryPage == true) {
     fill(#000096);
     rect(25, 25, width - 50, height - 50);
@@ -561,16 +571,16 @@ void draw() {
     fill(#FFFFFF);
     //center text
     //move 100 down
-    text("Music" + "\n", 420, 305);     
+    text("Music" + "\n", 470, 325);     
     textFont(Font1);
     fill(#FFFFFF);
     ///Title Theme
-    text("Title Theme (Final Fantasy I) by Nobuo Uematsu", 200, 315);
-    text("Reclamation (Fire Emblem: Shadow Dragon)", 225, 365);
-    text("by Yuka Tsujiyoko", 410, 415);
-    text("Battle 1 (Final Fantasy IV) by Nobuo Uematsu", 220, 465);
-    text("Victory (Final Fantasy VII) by Nobuo Uematsu", 220, 515);
-    text("Dead Music (Final Fantasy I) by Nobuo Uematsu", 200, 565);
+    text("Title Theme (Final Fantasy I) by Nobuo Uematsu", 200, 355);
+    text("Reclamation (Fire Emblem: Shadow Dragon)", 225, 405);
+    text("by Yuka Tsujiyoko", 410, 455);
+    text("Battle 1 (Final Fantasy IV) by Nobuo Uematsu", 220, 505);
+    text("Victory (Final Fantasy VII) by Nobuo Uematsu", 220, 555);
+    text("Dead Music (Final Fantasy I) by Nobuo Uematsu", 200, 605);
     //Text
     textSize(35);
     textFont(Font1);
@@ -626,26 +636,7 @@ void draw() {
     //reset values
   } 
   if (tutorialDead == true) {
-    fill(#0035FF);
-    stroke(#98FFFC);
-    strokeWeight(3);
-    rect(50, 50, width - 100, height - 100, 9);
-    //image();
-    //Text
-    textSize(50);
-    fill(#FFFFFF);
-    
-    stroke(#98FFFC);
-    strokeWeight(3);
-    textFont(Font2);
-    
-    text("GAME OVER" + 
-    "\n" + "You Died", 70, height - height + 120);
-    fill(#FFF300);
-    //indicator to clickRight to continue
-    //Click left to start over
-    //reset values
-    
+      //minim.stop();    
     //new code
     fill(#000096);
     rect(25, 25, width - 50, height - 50);
@@ -1405,7 +1396,7 @@ void draw() {
       }
       if (foeTAttack == true) {
         foeTAttack = false;
-        println("reset");
+        //println("reset");
       }        
         //if (tutorialStage == true) {
           //foeTdisapp = false;
@@ -1413,6 +1404,10 @@ void draw() {
          // foeT3disapp = false;
         //}
       playerAttacked = false;
+      if (playerHP <= 0 && tutorialStage == true) {
+        playerAlive = false;
+        tutorialDead = true;
+      }    
     }
       //maybe make case else if playerAttacked == false, bring back foes
     else if (playerAttacked == false) {
@@ -2600,25 +2595,6 @@ void mousePressed () {
         player3.shiftGain(player3.getGain(),-10,FADE);
         player3.loop();          
       }      
-        
-      if (playerHP <= 0 && stage1 == true) {
-        playerAlive = false;
-        playerDead = true;
-      //set foes not alive either to get rid of them from the screen
-      //foe1Alive = false;
-      //foe2Alive = false;
-      //foe3Alive = false;
-      //foe4Alive = false;
-      //foe5Alive = false;
-      //minim.stop();
-      
-      //Game Over music
-        minim3 = new Minim(this);
-        player3 = minim3.loadFile("death.mp3", 1000);
-        player3.play();    
-        player3.shiftGain(player3.getGain(),-15,FADE);
-        player3.loop();
-      }
       
     //play music if win
     //use stage wrap to determine what determines victory
@@ -2633,7 +2609,8 @@ void mousePressed () {
         player3.play();    
         player3.shiftGain(player3.getGain(),-10,FADE);
         player3.loop();      
-      }  
+      }
+      
     }
   }
   else if (tutorialVictory == true) {
@@ -2658,6 +2635,7 @@ void mousePressed () {
         }         
         //for musicCredits, clicking right will cancel tutorial Victory and
         //do resets
+        //cancel music
   }
 
 }
