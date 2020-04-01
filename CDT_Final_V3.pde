@@ -490,16 +490,7 @@ void draw() {
   String clickRight = "Click Right to Continue";
   String clickLeft = "Click Left to Go Back";
   String clickSkip = "S to Skip";
-  if (tutorialDead == true) {
-    //music is getting distorted
-    //need to do in mousePressed instead
-      //Game Over music
-    minim3 = new Minim(this);
-    player3 = minim3.loadFile("death.mp3", 1000);
-    player3.play();    
-    player3.shiftGain(player3.getGain(),-15,FADE);
-    player3.loop();    
-  }
+
   if (tutorialVictoryPage == true) {
     fill(#000096);
     rect(25, 25, width - 50, height - 50);
@@ -2637,7 +2628,16 @@ void mousePressed () {
         //do resets
         //cancel music
   }
-
+  else if (tutorialDead == true) {
+    //make it so player clicks right to activate music
+    //second click to restart the game
+    //minim.stop()
+    minim3 = new Minim(this);
+    player3 = minim3.loadFile("death.mp3", 1000);
+    player3.play();    
+    player3.shiftGain(player3.getGain(),-15,FADE);
+    player3.loop();    
+  }
 }
 void setGradient(int x, int y, float w, float h, color c1, color c2, int axis ) {
 
