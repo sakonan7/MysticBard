@@ -333,6 +333,7 @@ boolean tutorialConclude = false;
 boolean musicCredits = false;
 
 boolean redDead = false;
+boolean redDeadPage = false;
 
 boolean tutorialDead = false;
 
@@ -611,7 +612,7 @@ void draw() {
 
   }
   //death message
-  if (redDead == true) {
+  if (redDeadPage == true) {
     
     //no HP because HP is gone
     setGradient(currentShieldBarX, height-105, shieldBar, 15, c3, c4, 2);
@@ -1474,6 +1475,7 @@ void draw() {
       if (playerHP <= 0 && tutorialStage == true) {
         playerAlive = false;
         redDead = true;
+        redDeadPage = true;
         //tutorialDead = true;
       }    
     }
@@ -2712,19 +2714,27 @@ void mousePressed () {
         //do resets
         //cancel music
   }
-  else if (tutorialDead == true) {
+  //will need to label redDead into redDeadPage
+  else if (redDead == true) {
     //make it so player clicks right to activate music
     //second click to restart the game
     
-    //see if music still plays even a little bit when right clicking to restart
-    //minim.stop()
-    minim3 = new Minim(this);
-    player3 = minim3.loadFile("death.mp3", 1000);
-    player3.play();    
-    player3.shiftGain(player3.getGain(),-15,FADE);
-    player3.loop();  
+    //see if music still plays even a little bit when right clicking to restart 
     //println(playerHP)
     //println(currentViolinBar);
+    if (mouseButton == RIGHT && redDeadPage == true) {
+      redDead = false;
+      redDeadPage = false;
+      //which stage you were on will determine this
+      //playerAttacked will decide which death screen you will get
+      tutorialDead = true;
+       //minim.stop()
+      minim3 = new Minim(this);
+      player3 = minim3.loadFile("death.mp3", 1000);
+      player3.play();    
+      player3.shiftGain(player3.getGain(),-15,FADE);
+      player3.loop();       
+    }
   }
 }
 void setGradient(int x, int y, float w, float h, color c1, color c2, int axis ) {
