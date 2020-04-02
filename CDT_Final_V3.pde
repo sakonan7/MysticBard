@@ -72,6 +72,8 @@ PImage HPdamage;
 PImage tutorialV;
 PImage bardEnd;
 
+PImage tutorialD;
+
 //Foe sizes
 float foe1SizeX;
 float foe1SizeY;
@@ -329,6 +331,9 @@ boolean tutorialVictory = false;
 boolean tutorialVictoryPage = false;
 boolean tutorialConclude = false;
 boolean musicCredits = false;
+
+//boolean redDead = false;
+
 boolean tutorialDead = false;
 
 PFont Font1;
@@ -415,6 +420,7 @@ void setup() {
   
   tutorialV = loadImage("victory.jpg");
   bardEnd = loadImage("bardEnd.png");
+  tutorialD = loadImage("tutorialDead.png");
   
   //control background music here
   
@@ -649,16 +655,17 @@ void draw() {
     fill(#FFF300);
     //text(leftClick, 50, height - height + 70); 
     fill(#FFFFFF);
-    text("You have defeated your first enemy! But the battle has just begun", 50, 210);
+    text("You were defeated. Don't worry, you're just getting started!", 50, 210);
     
-    //image(tromboneD, 160, 250, 244, 156);
-    //800//593
-    image(tutorialV, 230, 250, 625, 463);
+    //840 954
+    //.88
+    image(tutorialD, 180, 230, 478, 563);
     //text("The true challenge is yet to come", 50, 772); 
     fill(#FFF300);
     textFont(Font1);
-    text("\n" + "\n" + clickRight, width - 385, height - 165);    
+    text("\n" + "\n" + "Click Right to Try Again", width - 390, height - 165);
   }  
+  
   //tutorial messages
   //wrap this in an if statement messageOer = false so I can cancel it with
   //a button press
@@ -2631,6 +2638,8 @@ void mousePressed () {
   else if (tutorialDead == true) {
     //make it so player clicks right to activate music
     //second click to restart the game
+    
+    //see if music still plays even a little bit when right clicking to restart
     //minim.stop()
     minim3 = new Minim(this);
     player3 = minim3.loadFile("death.mp3", 1000);
