@@ -332,7 +332,7 @@ boolean tutorialVictoryPage = false;
 boolean tutorialConclude = false;
 boolean musicCredits = false;
 
-//boolean redDead = false;
+boolean redDead = false;
 
 boolean tutorialDead = false;
 
@@ -611,6 +611,74 @@ void draw() {
 
   }
   //death message
+  if (redDead == true) {
+    
+    //no HP because HP is gone
+    setGradient(currentShieldBarX, height-105, shieldBar, 15, c3, c4, 2);
+    setGradient(currentViolinBarX, height-105, violinBar, 15, c3, c4, 2); //Violin
+    setGradient(currentTromboneBarX, height-105, tromboneBar, 15, c3, c4, 2);
+        
+    stroke(#9B9B9B); //gray
+    strokeWeight(3);
+    noFill();
+    textSize(20);
+  
+        //Don't gotta adjust the location of shield
+    text("   Shield", width - 227, height - 115);
+    rect(width - 240, height - 140, 220, 120, 7); //don't gotta adjust the
+        //size or location of shield
+        
+    text("   Violin", 268, height - 115);
+    rect(260, height - 140, 220, 120, 7); //don't gotta adjust the
+        
+    text("   Trombone", 33, height - 115);
+    rect(20, height - 140, 220, 120, 7);
+        
+    strokeWeight(10);
+    point(277, height - 122); //violin
+    point(37, height - 122); //trombone
+    point(width - 223, height - 122);
+    strokeWeight(3);
+        
+        //ring around selected weapon
+        //more golden, li
+        //glitch, if I press W first by accident, can't switch seemingly
+    if (weapon == "Violin") {
+      stroke(#FFCE46);
+          //#FFCE46
+          //FFD443
+      rect(252, height - 148, 235, 135, 8);          
+    }
+    if (weapon == "Trombone") {
+      stroke(#FFCE46);
+          //stroke(#FFB443);
+          
+      rect(13, height - 148, 235, 135, 8);
+          //println("switched");
+    }     
+    //display foes here
+    if (tutorialStage == true) {
+        if (foeTAlive == true) {
+          image(foetutorial, foetutorialX, foetutorialY - 30, foetutorialSizeX, foetutorialSizeY);
+        }
+        if (foeT2Alive == true) {
+          image(foeT2, foeT2X, foeT2Y - 30, foeT2SizeX, foeT2SizeY);
+        }
+        if (foeT3Alive == true) {
+          image(foeT3, foeT3X, foeT3Y - 30, foeT3SizeX, foeT3SizeY);
+        }      
+    }
+    fill(117,0,0,175);   
+    rect(0, 1, 1100, 900); 
+    
+    textFont(Font2);
+    fill(#FFF300);
+    text("You Died", 440, 430);
+    //move more to right, 50 apart from edge
+    textFont(Font1);
+    text("\n" + "\n" + clickRight, width - 365, height - 135);    
+    
+  }
   if (playerDead == true) {
     fill(#0035FF);
     stroke(#98FFFC);
@@ -1283,6 +1351,7 @@ void draw() {
       //trying overlaying a damage screen here
       //use booleans to determine which enemies will show up
       //doesn't work, have to do it from where the foe is being displayed
+    //part 3
     if (playerAttacked == true) {
         //enemy damaged animation
         //gonna need a countdown for this too
@@ -1296,8 +1365,8 @@ void draw() {
       if (tutorialStage == true) {
         //make it so when playerAttacked == true, foes disapp
         //try that with shield too
-        //foeT2disapp = true;
-        //foeT3disapp = true;
+        foeT2disapp = true;
+        foeT3disapp = true;
           //println(foeT2disapp);
         //println("disapp");
         if (foeTAlive == true) {
@@ -1404,7 +1473,8 @@ void draw() {
       playerAttacked = false;
       if (playerHP <= 0 && tutorialStage == true) {
         playerAlive = false;
-        tutorialDead = true;
+        redDead = true;
+        //tutorialDead = true;
       }    
     }
       //maybe make case else if playerAttacked == false, bring back foes
@@ -1420,6 +1490,7 @@ void draw() {
       //animations aren't playing
       //attacker
       //96
+    //part 2
     if (foeTAttack == true) {
         //maybe do animation here
         //feed from foe boolean
@@ -1490,8 +1561,8 @@ void draw() {
                   //image(foe1, foe1CoordX, foe1CoordY - 30, foe1SizeX, foe1SizeY);
                 
                 playerAttacked = true;
-                //foeT2disapp = true;
-                //foeT3disapp = true;
+                foeT2disapp = true;
+                foeT3disapp = true;
                 //println("hit"); //not playing at all                  
                     
                 foeTinterval = int(millis()/1000) + 5;
@@ -1557,6 +1628,8 @@ void draw() {
       shieldtime = nf(shieldt, 3);
       text(shieldtime, width/2, height - 200);
       if (shieldt > 0) {
+        //works because instaneous
+        //maybe works because lasts a few seconds?
         if (attackBlocked == false) {
           fill(70, 100, 0, 190); //darker
           //image(background, 0, 0, width, height);
@@ -1780,13 +1853,16 @@ void draw() {
           //use booleans to determine whether they disappear or not
           //try justplayerAttacked to do this
           //actually no, because disapp works for shield and blocked
+          
+        //using && foeAttack == false laggy and brings back image last minute  
         if (foeTdisapp == false) {
           image(foetutorial, foetutorialX, foetutorialY, foetutorialSizeX, foetutorialSizeY);
         } 
         //foeTAttack == false
         //if (foeTAttack == false) {
           //image(foetutorial, foetutorialX, foetutorialY, foetutorialSizeX, foetutorialSizeY);
-        //}      
+        //} 
+        //part 1
         if (foeTAttack == false) {
             //foe1interval is always 0
             //feed white and red here?
@@ -1810,7 +1886,7 @@ void draw() {
             foeTflash2int += 6;
               
             foeTdisapp = true;
-            println(foeTdisapp + " foeT"); //needs to work because this has to disappear
+            //println(foeTdisapp + " foeT"); //needs to work because this has to disappear
             //before attack animations
             foeTAttack = true;
           }
@@ -1838,6 +1914,7 @@ void draw() {
         if (foeT2disapp == false) {
           image(foeT2, foeT2X, foeT2Y, foeT2SizeX, foeT2SizeY);
         }
+        //doesn't work
         //if (playerAttacked == true) {
           //foeT2disapp = true;
         //}
@@ -2645,7 +2722,9 @@ void mousePressed () {
     player3 = minim3.loadFile("death.mp3", 1000);
     player3.play();    
     player3.shiftGain(player3.getGain(),-15,FADE);
-    player3.loop();    
+    player3.loop();  
+    //println(playerHP)
+    //println(currentViolinBar);
   }
 }
 void setGradient(int x, int y, float w, float h, color c1, color c2, int axis ) {
