@@ -16,7 +16,7 @@ Minim minim3;
 AudioPlayer player4;
 Minim minim4;
 
-static final int FADE = 2500;
+static final int FADE = 2200;
 
 //images
 PImage background;
@@ -140,6 +140,8 @@ int originalHPX = 550;
 //set these as zero and their drained as true
 //and their X's in the right place
 //Need the right place to add + 5 to their replenish
+
+//start at zero because of warm up
 float violinBar = 0;
 float tromboneBar = 0;
 
@@ -149,6 +151,7 @@ float currentViolinBar = 190;
 float currentTromboneBar = 190;
 float originalShieldBar = 190;
 float currentShieldBar = 190;
+//current = warmUp 
 int currentViolinBarX = 465;//need separate X for each weapon 465
 int originalViolinBarX = 275;
 int currentTromboneBarX = 225;
@@ -308,7 +311,7 @@ int cursorX;
 int cursorY;
 
 //Tutorial messages
-boolean message1 = false;
+boolean message1 = true;
 boolean message2 = false;
 boolean message3 = false;
 boolean message4 = false;
@@ -321,7 +324,7 @@ boolean messageShield = false;
 boolean messageShield2 = false;
 boolean messageAttacked = false;
 boolean messageInterupt = false;
-boolean messageLast = true;
+boolean messageLast = false;
 boolean messageOver = false;
 
 boolean victory = false;
@@ -426,7 +429,7 @@ void setup() {
   //control background music here
   
   //minim = new Minim(this);
-  //player = minim.loadFile("OST.mp3", 500);
+  //player = minim.loadFile("Battle.mp3", 500);
   //player.play();
   //-20 adjusts the sound, adjust higher for higher sound
   //player.shiftGain(player.getGain(),-15,FADE);
@@ -1284,6 +1287,8 @@ void draw() {
           //println("switched");
     }   
     if (warmUp == true) {
+      violinDrained = true;
+      tromboneDrained = true;
       violinReplenish = int(millis()/1000) + 5;
       tromboneReplenish = int(millis()/1000) + 10;
       foeTinterval = int(millis()/1000) + int(random(5,8));
@@ -2663,13 +2668,14 @@ void mousePressed () {
       if (foeTAlive == false && foeT2Alive == false && foeT3Alive == false && playerAlive == true) {
         tutorialVictory = true;
         tutorialVictoryPage = true;
+        tutorialStage = false;
         playerAlive = false; //get rid of HPbar and Die button
       //minim.stop();
 
         minim3 = new Minim(this);
         player3 = minim3.loadFile("Victory.mp3", 1000);
         player3.play();    
-        player3.shiftGain(player3.getGain(),-10,FADE);
+        player3.shiftGain(player3.getGain(),-35,FADE);
         player3.loop();          
       }      
       
@@ -2684,35 +2690,36 @@ void mousePressed () {
         minim3 = new Minim(this);
         player3 = minim3.loadFile("Victory.mp3", 1000);
         player3.play();    
-        player3.shiftGain(player3.getGain(),-10,FADE);
+        player3.shiftGain(player3.getGain(),-35,FADE);
         player3.loop();      
       }
       
     }
   }
   else if (tutorialVictory == true) {
-        if (mouseButton == RIGHT && tutorialVictoryPage == true) {
-          tutorialVictoryPage = false;
-          tutorialConclude = true;
-        }    
-        else if (mouseButton == RIGHT && tutorialConclude == true) {
-          tutorialConclude = false;
-          musicCredits = true;
+    if (mouseButton == RIGHT && tutorialVictoryPage == true) {
+      tutorialVictoryPage = false;
+      tutorialConclude = true;
+    }    
+    else if (mouseButton == RIGHT && tutorialConclude == true) {
+      tutorialConclude = false;
+      musicCredits = true;
         //messageOver = true;
         //tutorialStage = true;
         //println("over");
-        }  
-        else if (mouseButton == LEFT && tutorialConclude == true) {
-          tutorialConclude = false;
-          tutorialVictoryPage = true;
-        }   
-        else if (mouseButton == LEFT && musicCredits == true) {
-          musicCredits = false;
-          tutorialConclude = true;
-        }         
+    }  
+    else if (mouseButton == LEFT && tutorialConclude == true) {
+      tutorialConclude = false;
+      tutorialVictoryPage = true;
+    }   
+    else if (mouseButton == LEFT && musicCredits == true) {
+      musicCredits = false;
+      tutorialConclude = true;
+    }         
         //for musicCredits, clicking right will cancel tutorial Victory and
         //do resets
         //cancel music
+        //bring back to title screen
   }
   //will need to label redDead into redDeadPage
   else if (redDead == true) {
@@ -2723,17 +2730,42 @@ void mousePressed () {
     //println(playerHP)
     //println(currentViolinBar);
     if (mouseButton == RIGHT && redDeadPage == true) {
-      redDead = false;
       redDeadPage = false;
       //which stage you were on will determine this
       //playerAttacked will decide which death screen you will get
       tutorialDead = true;
        //minim.stop()
       minim3 = new Minim(this);
-      player3 = minim3.loadFile("death.mp3", 1000);
+      //400 and below, laggy
+      player3 = minim3.loadFile("death.mp3", 800);
       player3.play();    
-      player3.shiftGain(player3.getGain(),-15,FADE);
+      player3.shiftGain(player3.getGain(),-28,FADE);
       player3.loop();       
+    }
+    else if (mouseButton == RIGHT && tutorialDead == true) {
+      warmUp = true;
+      playerHP = 100;
+      currentHP = playerHP;
+      HPbar = originalHPbar;
+      currentHPX = originalHPX;
+      foeTHP = 150;
+      foeT2HP = 150;
+      foeT3HP = 150;
+      violinBar = 0;
+      tromboneBar = 0;
+      //resetting positions of bars to 0
+      currentViolinBarX = 465;
+      currentTromboneBarX = 225;
+      shieldBar = 190;
+      currentShieldBarX = originalShieldBarX;
+      shieldDrained = false;
+      foeTAlive = true;
+      foeT2Alive = true;
+      foeT3Alive = true;
+      playerAlive = true;
+      tutorialDead = false;
+      redDead = false;
+      minim3.stop();
     }
   }
 }
