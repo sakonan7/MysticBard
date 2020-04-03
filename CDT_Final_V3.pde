@@ -74,6 +74,8 @@ PImage bardEnd;
 
 PImage tutorialD;
 
+PImage title;
+
 //Foe sizes
 float foe1SizeX;
 float foe1SizeY;
@@ -311,7 +313,8 @@ int cursorX;
 int cursorY;
 
 //Tutorial messages
-boolean message1 = true;
+boolean titlePage = true;
+boolean message1 = false;
 boolean message2 = false;
 boolean message3 = false;
 boolean message4 = false;
@@ -425,6 +428,7 @@ void setup() {
   tutorialV = loadImage("victory.jpg");
   bardEnd = loadImage("bardEnd.png");
   tutorialD = loadImage("tutorialDead.png");
+  title = loadImage("title.png");
   
   //control background music here
   
@@ -576,12 +580,12 @@ void draw() {
     textFont(Font1);
     fill(#FFFFFF);
     ///Title Theme
-    text("Title Theme (Final Fantasy I) by Nobuo Uematsu", 200, 355);
-    text("Reclamation (Fire Emblem: Shadow Dragon)", 225, 405);
-    text("by Yuka Tsujiyoko", 410, 455);
-    text("Battle 1 (Final Fantasy IV) by Nobuo Uematsu", 220, 505);
-    text("Victory (Final Fantasy VII) by Nobuo Uematsu", 220, 555);
-    text("Dead Music (Final Fantasy I) by Nobuo Uematsu", 200, 605);
+    text("Title Theme (Final Fantasy I) by Nobuo Uematsu", 200, 405);
+    text("Reclamation (Fire Emblem: Shadow Dragon)", 225, 455);
+    text("by Yuka Tsujiyoko", 410, 505);
+    text("Battle 1 (Final Fantasy IV) by Nobuo Uematsu", 220, 555);
+    text("Victory (Final Fantasy VII) by Nobuo Uematsu", 220, 605);
+    text("Dead Music (Final Fantasy I) by Nobuo Uematsu", 200, 655);
     //Text
     textSize(35);
     textFont(Font1);
@@ -742,6 +746,9 @@ void draw() {
   //wrap this in an if statement messageOer = false so I can cancel it with
   //a button press
   //make text smaller and pictures larger
+  if (titlePage == true) {
+    image(title, 400, 380, 201, 265);
+  }
   if (message1 == true) {
     //Mystic Bard
     fill(#000096);
@@ -1176,10 +1183,6 @@ void draw() {
     textSize(50);
     textFont(Font2);
     fill(#FFFFFF);
-    
-    stroke(#98FFFC);
-    strokeWeight(3);
-    textFont(Font2);
     
     text("Battle" + "\n", 50, height - height + 90);     
     textFont(Font3);
@@ -2092,7 +2095,11 @@ void mousePressed () {
   //only determine booleans
   if (messageOver == false) {
     //make one for title
-    if (mouseButton == RIGHT && message1 == true) {
+    if (mouseButton == RIGHT && titlePage == true) {
+      titlePage = false;
+      message1 = true;
+    }
+    else if (mouseButton == RIGHT && message1 == true) {
       message1 = false;
       message2 = true;
     }
@@ -2673,9 +2680,9 @@ void mousePressed () {
       //minim.stop();
 
         minim3 = new Minim(this);
-        player3 = minim3.loadFile("Victory.mp3", 1000);
+        player3 = minim3.loadFile("Victory.mp3", 800);
         player3.play();    
-        player3.shiftGain(player3.getGain(),-35,FADE);
+        player3.shiftGain(player3.getGain(),-28,FADE);
         player3.loop();          
       }      
       
@@ -2688,9 +2695,9 @@ void mousePressed () {
       //minim.stop();
 
         minim3 = new Minim(this);
-        player3 = minim3.loadFile("Victory.mp3", 1000);
+        player3 = minim3.loadFile("Victory.mp3", 800);
         player3.play();    
-        player3.shiftGain(player3.getGain(),-35,FADE);
+        player3.shiftGain(player3.getGain(),-28,FADE);
         player3.loop();      
       }
       
@@ -2712,6 +2719,40 @@ void mousePressed () {
       tutorialConclude = false;
       tutorialVictoryPage = true;
     }   
+    else if (mouseButton == RIGHT && musicCredits == true) {
+      musicCredits = false;
+      tutorialVictory = false;
+      warmUp = true;
+      playerHP = 100;
+      currentHP = playerHP;
+      HPbar = originalHPbar;
+      currentHPX = originalHPX;
+      foeTHP = 150;
+      foeT2HP = 150;
+      foeT3HP = 150;
+      violinBar = 0;
+      tromboneBar = 0;
+      //resetting positions of bars to 0
+      currentViolinBarX = 465;
+      currentTromboneBarX = 225;
+      shieldBar = 190;
+      currentShieldBarX = originalShieldBarX;
+      shieldDrained = false;
+      foeTAlive = true;
+      foeT2Alive = true;
+      foeT3Alive = true;
+      playerAlive = true;
+      
+      titlePage = true;
+      minim3.stop(); 
+      //maybe need to play music here
+      messageOver = false;
+      //ie playerAlive
+      //tutorialStage
+        //messageOver = true;
+        //tutorialStage = true;
+        //println("over");
+    }    
     else if (mouseButton == LEFT && musicCredits == true) {
       musicCredits = false;
       tutorialConclude = true;
