@@ -342,6 +342,7 @@ boolean redDead = false;
 boolean redDeadPage = false;
 
 boolean tutorialDead = false;
+boolean tutorialRestart = false;
 
 PFont Font1;
 PFont Font2;
@@ -432,12 +433,12 @@ void setup() {
   
   //control background music here
   
-  //minim = new Minim(this);
-  //player = minim.loadFile("Battle.mp3", 500);
-  //player.play();
-  //-20 adjusts the sound, adjust higher for higher sound
-  //player.shiftGain(player.getGain(),-15,FADE);
-  //player.loop();
+  minim = new Minim(this);
+  player = minim.loadFile("Title Theme.mp3", 800);
+  player.play();
+  //-15 adjusts the sound, adjust higher for higher sound
+  player.shiftGain(player.getGain(),-15,FADE);
+  player.loop();
   
   foe1SizeX = 125 * 1.1;
   foe1SizeY = 200 * 1.1;
@@ -580,12 +581,12 @@ void draw() {
     textFont(Font1);
     fill(#FFFFFF);
     ///Title Theme
-    text("Title Theme (Final Fantasy I) by Nobuo Uematsu", 200, 405);
-    text("Reclamation (Fire Emblem: Shadow Dragon)", 225, 455);
-    text("by Yuka Tsujiyoko", 410, 505);
-    text("Battle 1 (Final Fantasy IV) by Nobuo Uematsu", 220, 555);
-    text("Victory (Final Fantasy VII) by Nobuo Uematsu", 220, 605);
-    text("Dead Music (Final Fantasy I) by Nobuo Uematsu", 200, 655);
+    text("Title Theme (Final Fantasy I) by Nobuo Uematsu", 200, 385);
+    text("Reclamation (Fire Emblem: Shadow Dragon)", 225, 435);
+    text("by Yuka Tsujiyoko", 410, 485);
+    text("Battle 1 (Final Fantasy IV) by Nobuo Uematsu", 220, 535);
+    text("Victory (Final Fantasy VII) by Nobuo Uematsu", 220, 585);
+    text("Dead Music (Final Fantasy I) by Nobuo Uematsu", 200, 635);
     //Text
     textSize(35);
     textFont(Font1);
@@ -740,6 +741,36 @@ void draw() {
     fill(#FFF300);
     textFont(Font1);
     text("\n" + "\n" + "Click Right to Try Again", width - 390, height - 165);
+  }  
+  if (tutorialRestart == true) {
+      //minim.stop();    
+    //new code
+    fill(#000096);
+    rect(25, 25, width - 50, height - 50);
+    textFont(Font2);
+    fill(#FFFFFF);
+    
+    stroke(#98FFFC);
+    strokeWeight(3);
+    textFont(Font2);
+    
+    text("Game Over" + "\n", 50, height - height + 90);     
+    textFont(Font3);
+    fill(#FFFFFF);
+    text("You Died", 50, height - height + 150);
+    //Text
+    textFont(Font1);
+    fill(#FFF300);
+    //text(leftClick, 50, height - height + 70); 
+    fill(#FFFFFF);
+    text("You were defeated. Don't worry, you're just getting started!", 50, 210);
+    
+    image(tutorialD, 180, 230, 478, 563);
+    //text("The true challenge is yet to come", 50, 772); 
+    fill(#FFF300);
+    textFont(Font1);
+    text("\n" + "\n" + "Click Right to Restart", width - 360, height - 165);
+    //text("\n" + "\n" + "Click Right to Try Again", width - 390, height - 165);
   }  
   
   //tutorial messages
@@ -1051,7 +1082,7 @@ void draw() {
     //use trombone y-size
     //use same x-size
     image(shielding, 155, 325, 461, 316); 
-    image(shieldUse, 631, 408, 244, 156);
+    image(shieldUse, 631, 418, 244, 156);
     //shield 
     //image(tromboneFirst, 155, 325, 461, 248);
     //image(tromboneUse, 631, 375, 244, 156); 
@@ -1484,6 +1515,7 @@ void draw() {
         playerAlive = false;
         redDead = true;
         redDeadPage = true;
+        minim.stop();
         //tutorialDead = true;
       }    
     }
@@ -1706,7 +1738,7 @@ void draw() {
                       //if cases determine if there's screen shake
         if(attackBlocked == true) {
           fill(70, 100, 0, 190); //darker
-          image(background, 0, -20, width, height);
+          image(background, 0, -15, width, height);
               //generate foes based onstage
           if (tutorialStage == true) {
             foeTdisapp = true;
@@ -2074,6 +2106,12 @@ void keyPressed () {
     messageOver = true;
     tutorialStage = true;
     println("skipped");
+    minim.stop();
+    player = minim.loadFile("Battle.mp3", 800);
+    player.play();
+    //-15 adjusts the sound, adjust higher for higher sound
+    player.shiftGain(player.getGain(),-15,FADE);
+    player.loop();
   }  
   //trying removing the weapon!=
   if ((key == 'w' || key == 'W')) {
@@ -2098,10 +2136,16 @@ void mousePressed () {
     if (mouseButton == RIGHT && titlePage == true) {
       titlePage = false;
       message1 = true;
+      minim.stop();
+      player = minim.loadFile("Intro and Tutorial.mp3", 800);
+      player.play();
+      //-15 adjusts the sound, adjust higher for higher sound
+      player.shiftGain(player.getGain(),-15,FADE);
+      player.loop();      
     }
     else if (mouseButton == RIGHT && message1 == true) {
       message1 = false;
-      message2 = true;
+      message2 = true;      
     }
     else if (mouseButton == RIGHT && message2 == true) {
       message2 = false;
@@ -2210,6 +2254,12 @@ void mousePressed () {
       messageOver = true;
       tutorialStage = true;
       println("over");
+      minim.stop();
+      player = minim.loadFile("Battle.mp3", 800);
+      player.play();
+      //-15 adjusts the sound, adjust higher for higher sound
+      player.shiftGain(player.getGain(),-15,FADE);
+      player.loop();      
     }  
     else if (mouseButton == LEFT && messageLast == true) {
       messageLast = false;
@@ -2337,7 +2387,7 @@ void mousePressed () {
             if (firstBlast == true) {
               if ((mouseX <= width && mouseX >= 0) && (mouseY <= height && mouseY >= 0)) {
                 textSize(32);
-                image(background, 0, -20, width, height);
+                image(background, 0, -15, width, height);
                 //create if cases only when foes are alive
                 if (foeTAlive == true) {
                   image(foetutorial, foetutorialX - 10, foetutorialY - 60, foetutorialSizeX * 1.1, foetutorialSizeY * 1.1);
@@ -2677,12 +2727,12 @@ void mousePressed () {
         tutorialVictoryPage = true;
         tutorialStage = false;
         playerAlive = false; //get rid of HPbar and Die button
-      //minim.stop();
+        minim.stop();
 
         minim3 = new Minim(this);
         player3 = minim3.loadFile("Victory.mp3", 800);
         player3.play();    
-        player3.shiftGain(player3.getGain(),-28,FADE);
+        player3.shiftGain(player3.getGain(),-15,FADE);
         player3.loop();          
       }      
       
@@ -2697,7 +2747,7 @@ void mousePressed () {
         minim3 = new Minim(this);
         player3 = minim3.loadFile("Victory.mp3", 800);
         player3.play();    
-        player3.shiftGain(player3.getGain(),-28,FADE);
+        player3.shiftGain(player3.getGain(),-15,FADE);
         player3.loop();      
       }
       
@@ -2747,11 +2797,11 @@ void mousePressed () {
       minim3.stop(); 
       //maybe need to play music here
       messageOver = false;
-      //ie playerAlive
-      //tutorialStage
-        //messageOver = true;
-        //tutorialStage = true;
-        //println("over");
+      player = minim.loadFile("Title Theme.mp3", 800);
+      player.play();
+      //-15 adjusts the sound, adjust higher for higher sound
+      player.shiftGain(player.getGain(),-15,FADE);
+      player.loop();      
     }    
     else if (mouseButton == LEFT && musicCredits == true) {
       musicCredits = false;
@@ -2780,10 +2830,14 @@ void mousePressed () {
       //400 and below, laggy
       player3 = minim3.loadFile("death.mp3", 800);
       player3.play();    
-      player3.shiftGain(player3.getGain(),-28,FADE);
+      player3.shiftGain(player3.getGain(),-15,FADE);
       player3.loop();       
     }
     else if (mouseButton == RIGHT && tutorialDead == true) {
+      tutorialDead = false;
+      tutorialRestart = true;
+    }
+    else if (mouseButton == RIGHT && tutorialRestart == true) {
       warmUp = true;
       playerHP = 100;
       currentHP = playerHP;
@@ -2804,9 +2858,14 @@ void mousePressed () {
       foeT2Alive = true;
       foeT3Alive = true;
       playerAlive = true;
-      tutorialDead = false;
+      tutorialRestart = false;
       redDead = false;
       minim3.stop();
+      player = minim.loadFile("Battle.mp3", 800);
+      player.play();
+      //-15 adjusts the sound, adjust higher for higher sound
+      player.shiftGain(player.getGain(),-15,FADE);
+      player.loop();      
     }
   }
 }
