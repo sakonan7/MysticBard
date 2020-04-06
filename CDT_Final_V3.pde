@@ -440,6 +440,10 @@ void setup() {
   player.shiftGain(player.getGain(),-15,FADE);
   player.loop();
   
+  minim2 = new Minim(this);
+  minim3 = new Minim(this);
+  minim4 = new Minim(this);
+  
   foe1SizeX = 125 * 1.1;
   foe1SizeY = 200 * 1.1;
   foe1CoordX = 390 - 60;
@@ -1479,10 +1483,9 @@ void draw() {
           //println("switched");
       }        
                      
-      //minim4 = new Minim(this);
-      //player4 = minim4.loadFile("axepunch.mp3", 500);
-      //player4.play();
-      //player4.shiftGain(player4.getGain(), 0,FADE); 
+      player4 = minim4.loadFile("axepunch.mp3", 500);
+      player4.play();
+      player4.shiftGain(player4.getGain(), 0,FADE); 
         //playerDamaged = false;
         
         //resetting values for whether foe attacked
@@ -1670,9 +1673,8 @@ void draw() {
 
           //maybe some bugs with violin when certain places are clicked
           //shieldInterval fed during click
-          //minim4 = new Minim(this);
-          //player4 = minim4.loadFile("electric.mp3", 500);
-          //player4.play();
+      player4 = minim4.loadFile("electric.mp3", 500);
+      player4.play();
           //originally -30
           //player4.shiftGain(player4.getGain(), -30,FADE);
       shieldt = shieldInterval - int(millis()/1000);
@@ -2358,7 +2360,7 @@ void mousePressed () {
             monsterTrombone = false; //reset
             //if case
             if (firstBlast == true) {
-              minim2 = new Minim(this);
+              
               player2 = minim2.loadFile("firstTrumpet.mp3", 500);
               player2.play();
               player2.shiftGain(player2.getGain(), -30,FADE);
@@ -2366,7 +2368,6 @@ void mousePressed () {
               secondBlast = true;
             }
             else if (secondBlast == true) {
-              minim2 = new Minim(this);
               player2 = minim2.loadFile("secondTrumpet.mp3", 500);
               player2.play();
               player2.shiftGain(player2.getGain(), -30,FADE);
@@ -2595,15 +2596,25 @@ void mousePressed () {
             //code, use or for all cases if a foe is interupted or not interupted
             //works because violin is single target
             if (foe1attacked == false) {
-              minim2 = new Minim(this);
               player2 = minim2.loadFile("violin.mp3", 500);
               player2.play();
               player2.shiftGain(player2.getGain(), -30,FADE);
               //println(foe1HP); //nothing printing
             }
+            if (foeTattacked == false) {
+              player2 = minim2.loadFile("violin.mp3", 800);
+              player2.play();
+              player2.shiftGain(player2.getGain(), -30,FADE);
+              //println(foe1HP); //nothing printing
+            }            
             //glitch part 1
+            //keeps being true
+            //maybe try foeFlash == true
             if (foeTattacked == true) {
               //println("play");
+              player2 = minim2.loadFile("violinFlinch.mp3", 800);
+              player2.play();
+              player2.shiftGain(player2.getGain(), -30,FADE);              
               foeTattacked = false;
             }            
             if (foe1attacked == true) {
@@ -2746,7 +2757,6 @@ void mousePressed () {
         playerAlive = false; //get rid of HPbar and Die button
         minim.stop();
 
-        minim3 = new Minim(this);
         player3 = minim3.loadFile("Victory.mp3", 800);
         player3.play();    
         player3.shiftGain(player3.getGain(),-15,FADE);
@@ -2761,7 +2771,7 @@ void mousePressed () {
         playerAlive =false; //get rid of HPbar and Die button
       //minim.stop();
 
-        minim3 = new Minim(this);
+        
         player3 = minim3.loadFile("Victory.mp3", 800);
         player3.play();    
         player3.shiftGain(player3.getGain(),-15,FADE);
@@ -2843,7 +2853,6 @@ void mousePressed () {
       //playerAttacked will decide which death screen you will get
       tutorialDead = true;
        //minim.stop()
-      minim3 = new Minim(this);
       //400 and below, laggy
       player3 = minim3.loadFile("death.mp3", 800);
       player3.play();    
@@ -2878,6 +2887,7 @@ void mousePressed () {
       tutorialRestart = false;
       redDead = false;
       minim3.stop();
+      
       player = minim.loadFile("Battle.mp3", 800);
       player.play();
       //-15 adjusts the sound, adjust higher for higher sound
