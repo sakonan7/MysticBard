@@ -126,7 +126,7 @@ int foeT2HP = 150;
 int foeT3HP = 150;
 int playerHP = 100;
 
-int damage = 150;
+int damage = 10;
 int tromboneDamage = 0;//15
 //int big damage
 float HPbar = 600;
@@ -1402,6 +1402,7 @@ void draw() {
         
       image(background, 0, -40, width, height);
         //use if cases to display foes
+        //make them not alive
       if (tutorialStage == true) {
         //make it so when playerAttacked == true, foes disapp
         //try that with shield too
@@ -1409,15 +1410,15 @@ void draw() {
         foeT3disapp = true;
           //println(foeT2disapp);
         //println("disapp");
-        if (foeTAlive == true) {
+        //if (foeTAlive == true) {
           image(foetutorial, foetutorialX, foetutorialY - 30, foetutorialSizeX, foetutorialSizeY);
-        }
-        if (foeT2Alive == true) {
+        //}
+        //if (foeT2Alive == true) {
           image(foeT2, foeT2X, foeT2Y - 30, foeT2SizeX, foeT2SizeY);
-        }
-        if (foeT3Alive == true) {
+        //}
+        //if (foeT3Alive == true) {
           image(foeT3, foeT3X, foeT3Y - 30, foeT3SizeX, foeT3SizeY);
-        }
+        //}
       }
                  
         //red filter
@@ -1427,7 +1428,7 @@ void draw() {
           
       rect(0, 1, 1099, 898);        
 
-      playerHP -= damage;
+      playerHP -= 0;
       HPbar = HPbar - originalHPbar/10;
       //reduce HPX here and transfer to currentHPX
       currentHPX = currentHPX + originalHPX/10;
@@ -1524,6 +1525,9 @@ void draw() {
       foeTdisapp = false;
       foeT2disapp = false;
       foeT3disapp = false;
+      foeTAlive = true;
+      foeT2Alive = true;
+      foeT3Alive = true;
     }
             
       //only works once and some of the timers aren't displayed
@@ -1538,7 +1542,7 @@ void draw() {
         //feed from foe boolean
         //why does it keep looping here?  
       stroke(#FFFFFF);
-        
+      foeTAlive = false;  
       foeTwhitet = foeTwhiteint-int(millis()/1000);
       foeTwhitetime = nf(foeTwhitet , 3);
         //display in white
@@ -1578,12 +1582,14 @@ void draw() {
               image(foetutorial, foetutorialX, foetutorialY, foetutorialSizeX, foetutorialSizeY);
                                 //enemy interupt here
                                 //8w
+              //glitch part 2
               if (foeTattacked == true) {
                 println("Interupted");
 
                 foeTAttack = false;
                 foeTInterupt = true;
-                foeTdisapp = false;
+                //foeTdisapp = false;
+                foeTAlive = true;
               }
             }
             else if (foeTflash2t <= 0 && foeTInterupt == false) {
@@ -1603,8 +1609,11 @@ void draw() {
                   //image(foe1, foe1CoordX, foe1CoordY - 30, foe1SizeX, foe1SizeY);
                 
                 playerAttacked = true;
-                foeT2disapp = true;
-                foeT3disapp = true;
+                //foeT2disapp = true;
+                //foeT3disapp = true;
+                //foeTAlive = true;
+                foeT2Alive = false;
+                foeT3Alive = false;
                 //println("hit"); //not playing at all                  
                     
                 foeTinterval = int(millis()/1000) + 5;
@@ -1633,7 +1642,7 @@ void draw() {
         foeTredint = int(millis()/1000) + 3; //maybe feed more
         foeTflash2int = int(millis()/1000) + 3;
         //println("refilled");
-        //println(foeTInterupt);
+        println(foeTInterupt + " foeTInterupt");
       }
     }      
 
@@ -1857,7 +1866,11 @@ void draw() {
       if (tutorialStage == true) {
         foeTdisapp = false;
         foeT2disapp = false;
-        foeT3disapp = false;          
+        foeT3disapp = false;
+        //May need this because FoeTAttack makes foeTAlive not alive
+        if (foeTAlive == false) {
+          foeTAlive = true;
+        }
       }
     }
      
@@ -1900,6 +1913,7 @@ void draw() {
         if (foeTdisapp == false) {
           image(foetutorial, foetutorialX, foetutorialY, foetutorialSizeX, foetutorialSizeY);
         } 
+
         //foeTAttack == false
         //if (foeTAttack == false) {
           //image(foetutorial, foetutorialX, foetutorialY, foetutorialSizeX, foetutorialSizeY);
@@ -1931,6 +1945,8 @@ void draw() {
             //println(foeTdisapp + " foeT"); //needs to work because this has to disappear
             //before attack animations
             foeTAttack = true;
+            foeTAlive = false;
+            println(foeTAlive);
           }
         } 
         //if (playerAttacked == true) {
@@ -2585,6 +2601,7 @@ void mousePressed () {
               player2.shiftGain(player2.getGain(), -30,FADE);
               //println(foe1HP); //nothing printing
             }
+            //glitch part 1
             if (foeTattacked == true) {
               //println("play");
               foeTattacked = false;
@@ -2722,7 +2739,7 @@ void mousePressed () {
       //death messages
       //if playerHP <= 0 && stageTutorial == true
       //if foeTAlive == false && playerAlive == true;
-      if (foeTAlive == false && foeT2Alive == false && foeT3Alive == false && playerAlive == true) {
+      if (foeTHP <= 0 && foeT2HP <= 0 && foeT3HP <= 0 && playerAlive == true) {
         tutorialVictory = true;
         tutorialVictoryPage = true;
         tutorialStage = false;
