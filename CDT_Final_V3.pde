@@ -76,6 +76,8 @@ PImage tutorialD;
 
 PImage title;
 
+PImage violinUI;
+
 //Foe sizes
 float foe1SizeX;
 float foe1SizeY;
@@ -431,6 +433,8 @@ void setup() {
   tutorialD = loadImage("tutorialDead.png");
   title = loadImage("title.png");
   
+  violinUI = loadImage("violinUI.png");
+  
   //control background music here
   
   minim = new Minim(this);
@@ -783,6 +787,9 @@ void draw() {
   //make text smaller and pictures larger
   if (titlePage == true) {
     image(title, 400, 380, 201, 265);
+    stroke(#98FFFC);
+    strokeWeight(3);
+    textFont(Font2);    
   }
   if (message1 == true) {
     //Mystic Bard
@@ -1282,30 +1289,35 @@ void draw() {
         //then decide on a multiplier to make each window bigger
         
         //do all gradients here so color isn't messed up
+    //maybe place images here first   
+    image(violinUI, 251, height - 156, 240, 156);
+    image(tromboneD, 7, height - 157, 244, 156);
+    image(shieldD, width - 253, height - 157, 244, 156);
+        
     setGradient(currentShieldBarX, height-105, shieldBar, 15, c3, c4, 2);
     setGradient(currentViolinBarX, height-105, violinBar, 15, c3, c4, 2); //Violin
     setGradient(currentTromboneBarX, height-105, tromboneBar, 15, c3, c4, 2);
         
-    stroke(#9B9B9B); //gray
+    //stroke(#9B9B9B); //gray
     strokeWeight(3);
     noFill();
-    textSize(20);
+    //textSize(20);
   
         //Don't gotta adjust the location of shield
-    text("   Shield", width - 227, height - 115);
-    rect(width - 240, height - 140, 220, 120, 7); //don't gotta adjust the
+    //text("   Shield", width - 227, height - 115);
+    //rect(width - 240, height - 140, 220, 120, 7); //don't gotta adjust the
         //size or location of shield
         
-    text("   Violin", 268, height - 115);
-    rect(260, height - 140, 220, 120, 7); //don't gotta adjust the
+    //text("   Violin", 268, height - 115);
+    //rect(260, height - 140, 220, 120, 7); //don't gotta adjust the
         
-    text("   Trombone", 33, height - 115);
-    rect(20, height - 140, 220, 120, 7);
+    //text("   Trombone", 33, height - 115);
+    //rect(20, height - 140, 220, 120, 7);
         
     strokeWeight(10);
-    point(277, height - 122); //violin
-    point(37, height - 122); //trombone
-    point(width - 223, height - 122);
+    //point(277, height - 122); //violin
+    //point(37, height - 122); //trombone
+    //point(width - 223, height - 122);
     strokeWeight(3);
         
         //ring around selected weapon
@@ -1429,7 +1441,10 @@ void draw() {
         //155
       fill(117,0,0,145);
       stroke(#FFFFFF);
-          
+
+      image(violinUI, 251, height - 156, 240, 156);
+      image(tromboneD, 7, height - 157, 244, 156);
+      image(shieldD, width - 253, height - 157, 244, 156);          
       rect(0, 1, 1099, 898);        
 
       playerHP -= 0;
@@ -1444,26 +1459,26 @@ void draw() {
       setGradient(currentViolinBarX, height-105, violinBar, 15, c3, c4, 2); //Violin
       setGradient(currentTromboneBarX, height-105, tromboneBar, 15, c3, c4, 2);
         
-      stroke(#9B9B9B);
+      //stroke(#9B9B9B);
       strokeWeight(3);
       noFill();
-      textSize(20);
+      //textSize(20);
   
         //Don't gotta adjust the location of shield
-      text("   Shield", width - 227, height - 115);
-      rect(width - 240, height - 140, 220, 120, 7); //don't gotta adjust the
+      //text("   Shield", width - 227, height - 115);
+      //rect(width - 240, height - 140, 220, 120, 7); //don't gotta adjust the
         //size or location of shield
         
-      text("   Violin", 268, height - 115);
-      rect(260, height - 140, 220, 120, 7); //don't gotta adjust the
+      //text("   Violin", 268, height - 115);
+      //rect(260, height - 140, 220, 120, 7); //don't gotta adjust the
         
-      text("   Trombone", 33, height - 115);
-      rect(20, height - 140, 220, 120, 7);
+      //text("   Trombone", 33, height - 115);
+      //rect(20, height - 140, 220, 120, 7);
         
-      strokeWeight(10);
-      point(277, height - 122); //violin
-      point(37, height - 122); //trombone
-      point(width - 223, height - 122);
+      //strokeWeight(10);
+      //point(277, height - 122); //violin
+      //point(37, height - 122); //trombone
+      //point(width - 223, height - 122);
       strokeWeight(3);
         
       //ring around selected weapon
@@ -1689,33 +1704,38 @@ void draw() {
             }
           }              
               //problem not fixed after removing foes
+          image(violinUI, 251, height - 156, 240, 156);
+          image(tromboneD, 7, height - 157, 244, 156);
+          image(shieldD, width - 253, height - 157, 244, 156);              
+              
           rect(0, 0, 1100, 900);              
           setGradient(currentHPX, 50, HPbar, 40, c2, c1, 3);
+                   
        
           setGradient(currentShieldBarX, height-105, shieldBar, 15, c3, c4, 2);
           setGradient(currentViolinBarX, height-105, violinBar, 15, c3, c4, 2); //Violin
           setGradient(currentTromboneBarX, height-105, tromboneBar, 15, c3, c4, 2);
         
-          stroke(#9B9B9B);
+          //stroke(#9B9B9B);
           strokeWeight(3);
           noFill();
-          textSize(20);
+          //textSize(20);
   
               //Don't gotta adjust the location of shield
-          text("   Shield", width - 227, height - 115);
-          rect(width - 240, height - 140, 220, 120, 7); //don't gotta adjust the
+          //text("   Shield", width - 227, height - 115);
+          //rect(width - 240, height - 140, 220, 120, 7); //don't gotta adjust the
              //size or location of shield
         
-          text("   Violin", 268, height - 115);
-          rect(260, height - 140, 220, 120, 7); //don't gotta adjust the
+          //text("   Violin", 268, height - 115);
+          //rect(260, height - 140, 220, 120, 7); //don't gotta adjust the
         
-          text("   Trombone", 33, height - 115);
-          rect(20, height - 140, 220, 120, 7);
+          //text("   Trombone", 33, height - 115);
+          //rect(20, height - 140, 220, 120, 7);
         
-          strokeWeight(10);
-          point(277, height - 122); //violin
-          point(37, height - 122); //trombone
-          point(width - 223, height - 122);
+          //strokeWeight(10);
+          //point(277, height - 122); //violin
+          //point(37, height - 122); //trombone
+          //point(width - 223, height - 122);
           strokeWeight(3);
         
               //ring around selected weapon
@@ -1757,32 +1777,38 @@ void draw() {
               //image(foe1, foe1CoordX, foe1CoordY - 20, foe1SizeX, foe1SizeY);
               //image(foe3, foe3CoordX, foe3CoordY - 20, foe3SizeX, foe3SizeY);
               //image(foe4, foe4CoordX, foe4CoordY - 20, foe4SizeX, foe4SizeY);
-              //image(foe5, foe5CoordX, foe5CoordY - 20, foe5SizeX, foe5SizeY);  
+              //image(foe5, foe5CoordX, foe5CoordY - 20, foe5SizeX, foe5SizeY); 
+          image(violinUI, 251, height - 156, 240, 156);
+          image(tromboneD, 7, height - 157, 244, 156);
+          image(shieldD, width - 253, height - 157, 244, 156);              
+              
           rect(0, 0, 1100, 900);
           setGradient(currentHPX, 50, HPbar, 40, c2, c1, 3);
+    
+          
           setGradient(currentShieldBarX, height-105, shieldBar, 15, c3, c4, 2);
           setGradient(currentViolinBarX, height-105, violinBar, 15, c3, c4, 2); //Violin
           setGradient(currentTromboneBarX, height-105, tromboneBar, 15, c3, c4, 2);
         
-          stroke(#9B9B9B);
+          //stroke(#9B9B9B);
           strokeWeight(3);
           noFill();
-          textSize(20);
+          //textSize(20);
               
-          text("   Shield", width - 227, height - 115);
-          rect(width - 240, height - 140, 220, 120, 7); //don't gotta adjust the
+          //text("   Shield", width - 227, height - 115);
+          //rect(width - 240, height - 140, 220, 120, 7); //don't gotta adjust the
               //size or location of shield
         
-          text("   Violin", 268, height - 115);
-          rect(260, height - 140, 220, 120, 7); //don't gotta adjust the
+          //text("   Violin", 268, height - 115);
+          //rect(260, height - 140, 220, 120, 7); //don't gotta adjust the
         
-          text("   Trombone", 33, height - 115);
-          rect(20, height - 140, 220, 120, 7);
+          //text("   Trombone", 33, height - 115);
+          //rect(20, height - 140, 220, 120, 7);
         
-          strokeWeight(10);
-          point(277, height - 122); //violin
-          point(37, height - 122); //trombone
-          point(width - 223, height - 122);
+          //strokeWeight(10);
+          //point(277, height - 122); //violin
+          //point(37, height - 122); //trombone
+          //point(width - 223, height - 122);
           strokeWeight(3);
         
               //ring around selected weapon
@@ -1938,7 +1964,7 @@ void draw() {
             foeTAlive = false;
             println(foeTAlive);
           }
-        } 
+        }
         //if (playerAttacked == true) {
           //foeTdisapp = true;
         //}
