@@ -252,6 +252,7 @@ String foeTflash2time = "003";
 int foeTredint = 3;
 int foeTredt = 0;
 String foeTredtime = "003";
+boolean foeTFlash = false;
 
 //recharge out of start is 10, 15
 //slow start up
@@ -1609,6 +1610,7 @@ void draw() {
                 //foeTdisapp = false;
                 //foeTAlive = true;
               //}
+              foeTFlash = true;
             }
             else if (foeTflash2t <= 0 && foeTInterupt == false) {
               //println("flash2");
@@ -1641,7 +1643,8 @@ void draw() {
                 foeTflashint = int(millis()/1000) + 3;
                 foeTredint = int(millis()/1000) + 3; //maybe feed more
                 foeTflash2int = int(millis()/1000) + 3;
-              }                 
+              } 
+              foeTFlash = false;
             }
           }                  
         }
@@ -1676,7 +1679,8 @@ void draw() {
 
           //maybe some bugs with violin when certain places are clicked
           //shieldInterval fed during click
-      player4 = minim4.loadFile("electric.mp3", 500);
+          //formerly 500
+      player4 = minim4.loadFile("violin.mp3", 300);
       player4.play();
           //originally -30
           //player4.shiftGain(player4.getGain(), -30,FADE);
@@ -2391,10 +2395,33 @@ void mousePressed () {
             
             //gonna need to do an or for all the other foes
             //not even running
+            if (foeTFlash == true) {
+              foeTattacked = true;
+              foeTAttack = false;
+              foeTAlive = true;
+              foeTInterupt = true; //gotta check if this still triggers if case in
+              foeTFlash = false;
+              //FoeTAttack 
+              //maybe try using a different player             
+            }        
+            //changed from foeTInterupt == false   
+            //if (foeTInterupt == true) {
+              
+            //}
             if (foeTattacked == true) {
-              println("play");
+              //println("play");             
               foeTattacked = false;
-            }
+              foeTInterupt = false;
+              foeTinterval = int(millis()/1000) + 5;
+              //do I still need these
+                    //yes and making them all 3 
+              foeTwhiteint = int(millis()/1000) + 3; 
+              foeTflashint = int(millis()/1000) + 3;
+              foeTredint = int(millis()/1000) + 3; 
+              foeTflash2int = int(millis()/1000) + 3;            
+            }            
+            
+            
             if (shield == true) {
               shield = false;
               //shieldInterval += 3; //i think the way millis works is that in increases over time
@@ -2609,32 +2636,35 @@ void mousePressed () {
             //gonna need to do an or for all the other foes
             //code, use or for all cases if a foe is interupted or not interupted
             //works because violin is single target
-            if (foe1attacked == false) {
-              player2 = minim2.loadFile("violin.mp3", 500);
-              player2.play();
-              player2.shiftGain(player2.getGain(), -30,FADE);
+            //if (foe1attacked == false) {
+              //player2 = minim2.loadFile("violin.mp3", 500);
+              //player2.play();
+              //player2.shiftGain(player2.getGain(), -30,FADE);
               //println(foe1HP); //nothing printing
-            }
+            //}
             //change this too before foeTflash2
-            if (foeTattacked == false) {
-              player2 = minim2.loadFile("violin.mp3", 800);
-              player2.play();
-              player2.shiftGain(player2.getGain(), -30,FADE);
-              //println(foe1HP); //nothing printing
-            }            
-            //glitch part 1
-            //keeps being true
-            //maybe try foeFlash == true
-            if (foeTflash2t > 0) {
+            if (foeTFlash == true) {
               foeTattacked = true;
               foeTAttack = false;
               foeTAlive = true;
               foeTInterupt = true; //gotta check if this still triggers if case in
-              //FoeTAttack
-              player2 = minim2.loadFile("violinFlinch.mp3", 800);
+              foeTFlash = false;
+              //FoeTAttack 
+              //maybe try using a different player
+              player2 = minim2.loadFile("violinFlinch.mp3", 500);
               player2.play();
-              player2.shiftGain(player2.getGain(), -30,FADE); 
-            }
+              //player2.shiftGain(player2.getGain(), -30,FADE);              
+            }        
+            //changed from foeTInterupt == false
+            else if (foeTFlash == false) {
+              player2 = minim2.loadFile("violin.mp3", 400);
+              player2.play();
+              //player2.shiftGain(player2.getGain(), -20,FADE);
+              //println(foe1HP); //nothing printing
+            }            
+            //if (foeTInterupt == true) {
+              
+            //}
             if (foeTattacked == true) {
               //println("play");             
               foeTattacked = false;
@@ -2647,12 +2677,13 @@ void mousePressed () {
               foeTredint = int(millis()/1000) + 3; //maybe feed more
               foeTflash2int = int(millis()/1000) + 3;
         //println("refilled");
-              println(foeTInterupt + " foeTInterupt");              
-            }  
-            if (foe1attacked == true) {
+              //println(foeTInterupt + " foeTInterupt");              
+            } 
+            
+            //if (foe1attacked == true) {
               //println("play");
-              foe1attacked = false;
-            }
+              //foe1attacked = false;
+            //}
             if (shield == true) {
               shield = false;
               //shieldInterval += 3; //i think the way millis works is that in increases over time
