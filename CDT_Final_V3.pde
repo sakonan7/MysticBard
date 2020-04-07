@@ -1680,10 +1680,6 @@ void draw() {
           //maybe some bugs with violin when certain places are clicked
           //shieldInterval fed during click
           //formerly 500
-      player4 = minim4.loadFile("violin.mp3", 300);
-      player4.play();
-          //originally -30
-          //player4.shiftGain(player4.getGain(), -30,FADE);
       shieldt = shieldInterval - int(millis()/1000);
       shieldtime = nf(shieldt, 3);
       text(shieldtime, width/2, height - 200);
@@ -2308,8 +2304,12 @@ void mousePressed () {
   //create right click here
   //works if level1 or level 2 or level 3 are true
   //shield = false  so barrier can't be spammed
-  else if (messageOver == true && playerAlive == true) {
+  else if (messageOver == true && playerAlive == true) {    
     if (mouseButton == RIGHT && shieldDrained == false && shield == false) {
+      player4 = minim4.loadFile("shielding.mp3", 600);
+      player4.play();
+          //originally -30
+      //player4.shiftGain(player4.getGain(), -30,FADE);      
     //light milky green and no screenshake
       //println(monsterViolin + " violin");
       if ((mouseX <= width && mouseX > 0) && (mouseY <= height && mouseY > 0)) {
@@ -2331,7 +2331,10 @@ void mousePressed () {
     }
     else if (mouseButton == RIGHT && shieldDrained == false && shield == true) {
     //light milky green and no screenshake
-    
+      player4 = minim4.loadFile("shielding.mp3", 600);
+      player4.play();
+          //originally -30
+      //player4.shiftGain(player4.getGain(), -30,FADE);    
       if ((mouseX <= width && mouseX > 0) && (mouseY <= height && mouseY > 0)) {
         shieldInterval = int(millis()/1000) + 2; //one action, feeds next countdown before
         //it begins
