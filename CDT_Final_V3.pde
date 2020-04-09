@@ -376,7 +376,7 @@ void setup() {
   
   musicNote1 = loadImage("note1.png");
   musicNote2 = loadImage("note2.png");
-  musicNote3 = loadImage("note5.png");
+  //musicNote3 = loadImage("note5.png");
   
   foe1 = loadImage("goblin.png");
   foe2 = loadImage("goblin.png");
@@ -432,7 +432,7 @@ void setup() {
   tutorialV = loadImage("victory.jpg");
   bardEnd = loadImage("bardEnd.png");
   tutorialD = loadImage("tutorialDead.png");
-  title = loadImage("title.png");
+  title = loadImage("titlePage.png");
   
   violinUI = loadImage("violinUI.png");
   
@@ -787,10 +787,10 @@ void draw() {
   //a button press
   //make text smaller and pictures larger
   if (titlePage == true) {
-    image(title, 400, 380, 201, 265);
+    image(title, 0, 0, 1100, 900);
     stroke(#98FFFC);
     strokeWeight(3);
-    textFont(Font2);    
+    textFont(Font2);   
   }
   if (message1 == true) {
     //Mystic Bard
