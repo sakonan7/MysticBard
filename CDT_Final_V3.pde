@@ -390,7 +390,7 @@ void setup() {
   foeWhite = loadImage("goblinwhite.png");
   foeRed = loadImage("goblinred.png");
   
-  treasure = loadImage("Treasure.png");
+  //treasure = loadImage("Treasure.png");
   
   village = loadImage("village.png");
   monsters = loadImage("monsters2.png");
@@ -1560,13 +1560,13 @@ void draw() {
         //maybe do animation here
         //feed from foe boolean
         //why does it keep looping here?  
-      stroke(#FFFFFF);
       foeTAlive = false;  
       foeTwhitet = foeTwhiteint-int(millis()/1000);
       foeTwhitetime = nf(foeTwhitet , 3);
         //display in white
       text(foeTwhitetime, width/2, height - 50);  
         //not even playing this part
+      //these are not playing
       if (foeTwhitet > 0) {
         image(foeWhite, foetutorialX, foetutorialY, foetutorialSizeX, foetutorialSizeY);
       }
@@ -1884,9 +1884,9 @@ void draw() {
         foeT2disapp = false;
         foeT3disapp = false;
         //May need this because FoeTAttack makes foeTAlive not alive
-        if (foeTAlive == false) {
-          foeTAlive = true;
-        }
+        //if (foeTAlive == false) {
+          //foeTAlive = true;
+        //}
       }
     }
      
@@ -1952,10 +1952,16 @@ void draw() {
               //know what these values are and how they are working
               //leading to negative values
               //only playing white
+              //with original setup, white animation doesn't work right away
+               //maybe try doing this on warmup
             foeTwhiteint += 3; //only works for 3 for some reason
             foeTflashint += 4;
             foeTredint += 5; //higher is causing problems
             foeTflash2int += 6;
+            //foeTwhiteint += int(millis()/1000) +1; //only works for 3 for some reason
+            //foeTflashint += int(millis()/1000) +2;
+            //foeTredint += int(millis()/1000) +3; //higher is causing problems
+            //foeTflash2int += int(millis()/1000) +4;            
               
             foeTdisapp = true;
             //println(foeTdisapp + " foeT"); //needs to work because this has to disappear
