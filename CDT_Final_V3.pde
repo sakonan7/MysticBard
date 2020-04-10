@@ -128,7 +128,7 @@ int foeT2HP = 150;
 int foeT3HP = 150;
 int playerHP = 100;
 
-int damage = 0;
+int damage = 10;
 int tromboneDamage = 0;//15
 //int big damage
 float HPbar = 600;
@@ -2425,7 +2425,7 @@ void mousePressed () {
             
             //gonna need to do an or for all the other foes
             //not even running
-            if (foeTFlash == true) {
+            if (foeTFlash == true && foeTattacked == true) {
               foeTattacked = true;
               foeTAttack = false;
               foeTAlive = true;
@@ -2673,7 +2673,7 @@ void mousePressed () {
               //println(foe1HP); //nothing printing
             //}
             //change this too before foeTflash2
-            if (foeTFlash == true) {
+            if (foeTFlash == true && foeTattacked == true) {
               println("very true");
               foeTattacked = true;
               foeTAttack = false;
