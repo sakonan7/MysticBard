@@ -128,7 +128,7 @@ int foeT2HP = 150;
 int foeT3HP = 150;
 int playerHP = 100;
 
-int damage = 10;
+int damage = 0;
 int tromboneDamage = 0;//15
 //int big damage
 float HPbar = 600;
@@ -257,6 +257,7 @@ boolean foeTFlash = false;
 //recharge out of start is 10, 15
 //slow start up
 boolean warmUp = true;
+boolean firstAttack = true;
 
 boolean shield = false;
 int shieldInterval = 3;
@@ -394,7 +395,7 @@ void setup() {
   
   village = loadImage("village.png");
   monsters = loadImage("monsters2.png");
-  loss = loadImage("Loss.png");
+  //loss = loadImage("Loss.png");
   violinAttack = loadImage("violinAttack.png");
   violinUse = loadImage("violinUse.png");
   tutorial = loadImage("tutorial.png");
@@ -1343,6 +1344,7 @@ void draw() {
       violinReplenish = int(millis()/1000) + 5;
       tromboneReplenish = int(millis()/1000) + 10;
       foeTinterval = int(millis()/1000) + int(random(5,8));
+      
       warmUp = false;
     }
         
@@ -1448,7 +1450,7 @@ void draw() {
       image(shieldD, width - 253, height - 157, 244, 156);          
       rect(0, 1, 1099, 898);        
 
-      playerHP -= 0;
+      playerHP -= 10;
       HPbar = HPbar - originalHPbar/10;
       //reduce HPX here and transfer to currentHPX
       currentHPX = currentHPX + originalHPX/10;
@@ -1523,6 +1525,12 @@ void draw() {
       }
       if (foeTAttack == true) {
         foeTAttack = false;
+        foeTdisapp = false;
+        foeT2disapp = false;
+        foeT3disapp = false;        
+        foeTAlive = true;
+        foeT2Alive = true;
+        foeT3Alive = true;
         //println("reset");
       }        
         //if (tutorialStage == true) {
@@ -1540,14 +1548,14 @@ void draw() {
       }    
     }
       //maybe make case else if playerAttacked == false, bring back foes
-    else if (playerAttacked == false) {
-      foeTdisapp = false;
-      foeT2disapp = false;
-      foeT3disapp = false;
-      foeTAlive = true;
-      foeT2Alive = true;
-      foeT3Alive = true;
-    }
+    //else if (playerAttacked == false) {
+      //foeTdisapp = false;
+      //foeT2disapp = false;
+      //foeT3disapp = false;
+      //foeTAlive = true;
+      //foeT2Alive = true;
+      //foeT3Alive = true;
+    //}
             
       //only works once and some of the timers aren't displayed
       //put print messages to see what is playing and isn't
@@ -1864,6 +1872,9 @@ void draw() {
          shield = false;
             //println("Yes2");
             //println(shieldInterval);
+         if (foeTHP > 0) {
+           foeTAlive = true;
+         }            
        }
           //need this to trigger after all is said and done
           
@@ -1939,7 +1950,7 @@ void draw() {
             //foe1interval is always 0
             //feed white and red here?
             //trying not to loop
-          foeTt = foeTinterval-int(millis()/1000);
+          foeTt = foeTinterval-int(millis()/1000); //5-8 second difference
           foeTtime = nf(foeTt , 3);
           text(foe1time, width/2, height - 50);
             //too fast
@@ -1954,10 +1965,20 @@ void draw() {
               //only playing white
               //with original setup, white animation doesn't work right away
                //maybe try doing this on warmup
-            foeTwhiteint += 3; //only works for 3 for some reason
-            foeTflashint += 4;
-            foeTredint += 5; //higher is causing problems
-            foeTflash2int += 6;
+            //for warmup   
+            if (firstAttack == true) {
+               foeTwhiteint = int(millis()/1000) + 1; //maybe feed more
+               foeTflashint = int(millis()/1000) + 2;
+               foeTredint = int(millis()/1000) + 3; //maybe feed more
+               foeTflash2int = int(millis()/1000) + 4;              
+               
+            }
+            else if (firstAttack == false) {
+              foeTwhiteint += 3; //only works for 3 for some reason
+              foeTflashint += 4;
+              foeTredint += 5; //higher is causing problems
+              foeTflash2int += 6;              
+            }
             //foeTwhiteint += int(millis()/1000) +1; //only works for 3 for some reason
             //foeTflashint += int(millis()/1000) +2;
             //foeTredint += int(millis()/1000) +3; //higher is causing problems
@@ -1968,7 +1989,7 @@ void draw() {
             //before attack animations
             foeTAttack = true;
             foeTAlive = false;
-            println(foeTAlive);
+            firstAttack = false; //put it here so else if isn't triggered
           }
         }
         //if (playerAttacked == true) {
@@ -2528,7 +2549,7 @@ void mousePressed () {
             if (secondBlast == true) {
               //tremor
               if (mouseX <= foetutorialSizeX + foetutorialX + 140 && mouseX >= foetutorialX - 140
-              && (mouseY <= foetutorialSizeY + foetutorialY + 140 && mouseY >= foetutorialY - 140) && foeTAlive) { 
+              && (mouseY <= foetutorialSizeY + foetutorialY + 140 && mouseY >= foetutorialY - 140) && foeTHP > 0) { 
               //damage spasm
                 image(foetutorial, foetutorialX - 10, foetutorialY - 60, foetutorialSizeX * 1.1, foetutorialSizeY * 1.1);
 
@@ -2558,7 +2579,7 @@ void mousePressed () {
                 monsterTrombone = true;
               }
               if (mouseX <= foeT2SizeX + foeT2X + 140 && mouseX >= foeT2X - 140
-              && (mouseY <= foeT2SizeY + foeT2Y + 140 && mouseY >= foeT2Y - 140) && foeT2Alive) { 
+              && (mouseY <= foeT2SizeY + foeT2Y + 140 && mouseY >= foeT2Y - 140) && foeT2HP > 0) { 
               //damage spasm
                 
                 image(foeT2, foeT2X - 10, foeT2Y - 60, foeT2SizeX * 1.1, foeT2SizeY * 1.1);
@@ -2588,7 +2609,7 @@ void mousePressed () {
                 monsterTrombone = true;
               }
               if (mouseX <= foeT3SizeX + foeT3X + 140 && mouseX >= foeT3X - 140
-              && (mouseY <= foeT3SizeY + foeT3Y + 140 && mouseY >= foeT3Y - 140) && foeT3Alive) { 
+              && (mouseY <= foeT3SizeY + foeT3Y + 140 && mouseY >= foeT3Y - 140) && foeT3HP > 0) { 
               //damage spasm
                 
                 image(foeT3, foeT3X - 10, foeT3Y - 60, foeT3SizeX * 1.1, foeT3SizeY * 1.1);
@@ -2641,7 +2662,7 @@ void mousePressed () {
         //9w
           if (monsterViolin == true) {
 
-            monsterViolin = false; //reset
+            
             //gonna need to do an or for all the other foes
             //code, use or for all cases if a foe is interupted or not interupted
             //works because violin is single target
@@ -2653,6 +2674,7 @@ void mousePressed () {
             //}
             //change this too before foeTflash2
             if (foeTFlash == true) {
+              println("very true");
               foeTattacked = true;
               foeTAttack = false;
               foeTAlive = true;
@@ -2666,6 +2688,7 @@ void mousePressed () {
             }        
             //changed from foeTInterupt == false
             else if (foeTFlash == false) {
+              //println("No Flash");
               player2 = minim2.loadFile("violin.mp3", 400);
               player2.play();
               //player2.shiftGain(player2.getGain(), -20,FADE);
@@ -2707,12 +2730,13 @@ void mousePressed () {
               violinDrained = true;
               violinReplenish = int(millis()/1000) + 10;
             }
+            monsterViolin = false; //reset
           }
           //use stages here to determine where the hit boxes are
           //if tutorialStage == true
           if (tutorialStage == true) {
             if (mouseX <= foetutorialSizeX + foetutorialX && mouseX >= foetutorialX
-            && (mouseY <= foetutorialSizeY + foetutorialY && mouseY >= foetutorialY) && foeTAlive) { 
+            && (mouseY <= foetutorialSizeY + foetutorialY && mouseY >= foetutorialY) && foeTHP > 0) { 
             //damage spasm
               image(foetutorial, foetutorialX - 15, foetutorialY - 30, foetutorialSizeX * 1.2, foetutorialSizeY * 1.2);
           
@@ -2740,7 +2764,7 @@ void mousePressed () {
               monsterViolin = true;
             }
             if (mouseX <= foeT2SizeX + foeT2X && mouseX >= foeT2X
-            && (mouseY <= foeT2SizeY + foeT2Y && mouseY >= foeT2Y) && foeT2Alive) { 
+            && (mouseY <= foeT2SizeY + foeT2Y && mouseY >= foeT2Y) && foeT2HP > 0) { 
             //damage spasm
               image(foeT2, foeT2X - 15, foeT2Y - 30, foeT2SizeX * 1.2, foeT2SizeY * 1.2);
           
@@ -2766,7 +2790,7 @@ void mousePressed () {
               monsterViolin = true;
             } 
             if (mouseX <= foeT3SizeX + foeT3X && mouseX >= foeT3X
-            && (mouseY <= foeT3SizeY + foeT3Y && mouseY >= foeT3Y) && foeT3Alive) { 
+            && (mouseY <= foeT3SizeY + foeT3Y && mouseY >= foeT3Y) && foeT3HP > 0) { 
             //damage spasm
               image(foeT3, foeT3X - 15, foeT3Y - 30, foeT3SizeX * 1.2, foeT3SizeY * 1.2);
           
@@ -2872,6 +2896,7 @@ void mousePressed () {
       musicCredits = false;
       tutorialVictory = false;
       warmUp = true;
+      firstAttack = true; //gonna need to make this true for next levels too
       playerHP = 100;
       currentHP = playerHP;
       HPbar = originalHPbar;
@@ -2937,6 +2962,7 @@ void mousePressed () {
     }
     else if (mouseButton == RIGHT && tutorialRestart == true) {
       warmUp = true;
+      firstAttack = true;
       playerHP = 100;
       currentHP = playerHP;
       HPbar = originalHPbar;
