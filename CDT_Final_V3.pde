@@ -2147,7 +2147,7 @@ void draw() {
 }
 void keyPressed () {
   //glitch when you press a or w if you already have that weapon selected
-  if (key == 's' || key == 'S' && tutorialStage == false && messageOver == false) {
+  if ((key == 's' || key == 'S') && (titlePage == false && messageOver == false)) {
     //worked fine yesterday
     message1 = false;
     message2 = false;
