@@ -128,7 +128,7 @@ int foeT2HP = 150;
 int foeT3HP = 150;
 int playerHP = 100;
 
-int damage = 10;
+int damage = 0;
 int tromboneDamage = 0;//15
 //int big damage
 float HPbar = 600;
@@ -1353,10 +1353,12 @@ void draw() {
           //try setting the values before
       violinReplenisht = violinReplenish-int(millis()/1000);
       violinReplenishtime = nf(violinReplenisht , 3);
+      //println("violin replenish");
       if(violinReplenisht == 0){
         violinBar = originalWeaponBar;
         currentViolinBarX = originalViolinBarX; 
         violinDrained = false;
+        //println("Done Violin");
       }
 
       //text(violinReplenishtime, width/2, height - 200);
@@ -1660,7 +1662,6 @@ void draw() {
         //playerAttacked = true;
         //replenish here
         //replenish in foe1Alive == true if attack shielded
-
     }      
 
     if (foe3Attack == true) {
@@ -2425,32 +2426,66 @@ void mousePressed () {
             
             //gonna need to do an or for all the other foes
             //not even running
-            if (foeTFlash == true && foeTattacked == true) {
-              foeTattacked = true;
-              foeTAttack = false;
-              foeTAlive = true;
-              foeTInterupt = true; //gotta check if this still triggers if case in
-              foeTFlash = false;
+            //if (foeTFlash == true && foeTattacked == true) {
+             // foeTattacked = true;
+              //foeTAttack = false;
+              //foeTAlive = true;
+              //foeTInterupt = true; //gotta check if this still triggers if case in
+              //foeTFlash = false;
               //FoeTAttack 
               //maybe try using a different player             
-            }        
+            //}        
             //changed from foeTInterupt == false   
             //if (foeTInterupt == true) {
               
             //}
-            if (foeTattacked == true) {
+            //if (foeTattacked == true) {
               //println("play");             
-              foeTattacked = false;
-              foeTInterupt = false;
+              //foeTattacked = false;
+              //foeTInterupt = false;
+              //foeTinterval = int(millis()/1000) + 5;
+              //do I still need these
+                    //yes and making them all 3 
+              //foeTwhiteint = int(millis()/1000) + 3; 
+              //foeTflashint = int(millis()/1000) + 3;
+              //foeTredint = int(millis()/1000) + 3; 
+              //foeTflash2int = int(millis()/1000) + 3;            
+            //}            
+            if (foeTFlash == true && foeTattacked == true) {
+              println("very true");
+              //foeTattacked = true;
+              foeTAttack = false;
+              foeTAlive = true;
+              foeTInterupt = true; //gotta check if this still triggers if case in
+              foeTFlash = false;
+              //foeTattacked = false;
+              //foeTInterupt = false; //Put this in FoeTAttack?
               foeTinterval = int(millis()/1000) + 5;
               //do I still need these
                     //yes and making them all 3 
-              foeTwhiteint = int(millis()/1000) + 3; 
+              foeTwhiteint = int(millis()/1000) + 3; //maybe feed more
               foeTflashint = int(millis()/1000) + 3;
-              foeTredint = int(millis()/1000) + 3; 
-              foeTflash2int = int(millis()/1000) + 3;            
+              foeTredint = int(millis()/1000) + 3; //maybe feed more
+              foeTflash2int = int(millis()/1000) + 3;              
+              //FoeTAttack 
+              //maybe try using a different player
+              player2 = minim2.loadFile("violinFlinch.mp3", 500);
+              player2.play();
+              //player2.shiftGain(player2.getGain(), -30,FADE);              
+            }        
+            //changed from foeTInterupt == false
+            else if (foeTFlash == false) {
+              //println("No Flash");
+              player2 = minim2.loadFile("violin.mp3", 400);
+              player2.play();
+              //player2.shiftGain(player2.getGain(), -20,FADE);
+              //println(foe1HP); //nothing printing
+            }
+            if (foeTInterupt == true) {
+              foeTInterupt = false;
+              foeTattacked = false;
+              println("Uninterupt");        
             }            
-            
             
             if (shield == true) {
               shield = false;
@@ -2661,7 +2696,6 @@ void mousePressed () {
         //use violin cancel 
         //9w
           if (monsterViolin == true) {
-
             
             //gonna need to do an or for all the other foes
             //code, use or for all cases if a foe is interupted or not interupted
@@ -2675,11 +2709,20 @@ void mousePressed () {
             //change this too before foeTflash2
             if (foeTFlash == true && foeTattacked == true) {
               println("very true");
-              foeTattacked = true;
+              //foeTattacked = true;
               foeTAttack = false;
               foeTAlive = true;
               foeTInterupt = true; //gotta check if this still triggers if case in
               foeTFlash = false;
+              //foeTattacked = false;
+              //foeTInterupt = false; //Put this in FoeTAttack?
+              foeTinterval = int(millis()/1000) + 5;
+              //do I still need these
+                    //yes and making them all 3 
+              foeTwhiteint = int(millis()/1000) + 3; //maybe feed more
+              foeTflashint = int(millis()/1000) + 3;
+              foeTredint = int(millis()/1000) + 3; //maybe feed more
+              foeTflash2int = int(millis()/1000) + 3;              
               //FoeTAttack 
               //maybe try using a different player
               player2 = minim2.loadFile("violinFlinch.mp3", 500);
@@ -2693,24 +2736,31 @@ void mousePressed () {
               player2.play();
               //player2.shiftGain(player2.getGain(), -20,FADE);
               //println(foe1HP); //nothing printing
+            }
+            if (foeTInterupt == true) {
+              foeTInterupt = false;
+              foeTattacked = false;
+              println("Uninterupt");        
             }            
+            //maybe create cases where it's foeTFlash != true && foeTAttacked
             //if (foeTInterupt == true) {
               
             //}
-            if (foeTattacked == true) {
+            //try adding this code
+            //if (foeTattacked == true) {
               //println("play");             
-              foeTattacked = false;
-              foeTInterupt = false;
-              foeTinterval = int(millis()/1000) + 5;
+              //foeTattacked = false;
+              //foeTInterupt = false;
+              //foeTinterval = int(millis()/1000) + 5;
               //do I still need these
                     //yes and making them all 3 
-              foeTwhiteint = int(millis()/1000) + 3; //maybe feed more
-              foeTflashint = int(millis()/1000) + 3;
-              foeTredint = int(millis()/1000) + 3; //maybe feed more
-              foeTflash2int = int(millis()/1000) + 3;
+              //foeTwhiteint = int(millis()/1000) + 3; //maybe feed more
+              //foeTflashint = int(millis()/1000) + 3;
+              //foeTredint = int(millis()/1000) + 3; //maybe feed more
+              //foeTflash2int = int(millis()/1000) + 3;
         //println("refilled");
               //println(foeTInterupt + " foeTInterupt");              
-            } 
+            //} 
             
             //if (foe1attacked == true) {
               //println("play");
