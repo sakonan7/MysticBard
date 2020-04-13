@@ -128,7 +128,7 @@ int foeT2HP = 150;
 int foeT3HP = 150;
 int playerHP = 100;
 
-int damage = 0;
+int damage = 150;
 int tromboneDamage = 0;//15
 //int big damage
 float HPbar = 600;
@@ -587,16 +587,16 @@ void draw() {
     fill(#FFFFFF);
     //center text
     //move 100 down
-    text("Music" + "\n", 470, 325);     
+    text("Music" + "\n", 470, 265);     
     textFont(Font1);
     fill(#FFFFFF);
     ///Title Theme
-    text("Title Theme (Final Fantasy I) by Nobuo Uematsu", 200, 385);
-    text("Reclamation (Fire Emblem: Shadow Dragon)", 225, 435);
-    text("by Yuka Tsujiyoko", 410, 485);
-    text("Battle 1 (Final Fantasy IV) by Nobuo Uematsu", 220, 535);
-    text("Victory (Final Fantasy VII) by Nobuo Uematsu", 220, 585);
-    text("Dead Music (Final Fantasy I) by Nobuo Uematsu", 200, 635);
+    text("Title Theme (Final Fantasy I) by Nobuo Uematsu", 200, 325);
+    text("Reclamation (Fire Emblem: Shadow Dragon)", 225, 375);
+    text("by Yuka Tsujiyoko", 410, 425);
+    text("Battle 1 (Final Fantasy IV) by Nobuo Uematsu", 220, 475);
+    text("Victory (Final Fantasy VII) by Nobuo Uematsu", 220, 525);
+    text("Dead Music (Final Fantasy I) by Nobuo Uematsu", 200, 575);
     //Text
     textSize(35);
     textFont(Font1);
@@ -1577,38 +1577,39 @@ void draw() {
       text(foeTwhitetime, width/2, height - 50);  
         //not even playing this part
       //these are not playing
-      if (foeTwhitet > 0) {
-        image(foeWhite, foetutorialX, foetutorialY, foetutorialSizeX, foetutorialSizeY);
-      }
-      else if (foeTwhitet <= 0) {
-        foeTflasht = foeTflashint - int(millis()/1000);
-        foeTflashtime = nf(foeTflasht, 3);
-        text(foeTflashtime, width/2, height - 100);
-        //println("white");
-        if (foeTflasht > 0) {
-          image(foetutorial, foetutorialX, foetutorialY, foetutorialSizeX, foetutorialSizeY);
+      if (foeTHP > 0) {
+        if (foeTwhitet > 0) {
+          image(foeWhite, foetutorialX, foetutorialY, foetutorialSizeX, foetutorialSizeY);
         }
-        else if (foeTflasht <= 0) {
+        else if (foeTwhitet <= 0) {
+          foeTflasht = foeTflashint - int(millis()/1000);
+          foeTflashtime = nf(foeTflasht, 3);
+          text(foeTflashtime, width/2, height - 100);
+        //println("white");
+          if (foeTflasht > 0) {
+            image(foetutorial, foetutorialX, foetutorialY, foetutorialSizeX, foetutorialSizeY);
+          }
+          else if (foeTflasht <= 0) {
             //foe1Red = true;
-          foeTredt = foeTredint-int(millis()/1000);
-          foeTredtime = nf(foeTredt , 3);
-          text(foeTredtime, width/2, height - 150);
+            foeTredt = foeTredint-int(millis()/1000);
+            foeTredtime = nf(foeTredt , 3);
+            text(foeTredtime, width/2, height - 150);
           //println("flash");
             //red skipped?
-          if (foeTredt > 0) {
-            image(foeRed, foetutorialX, foetutorialY, foetutorialSizeX, foetutorialSizeY);
+            if (foeTredt > 0) {
+              image(foeRed, foetutorialX, foetutorialY, foetutorialSizeX, foetutorialSizeY);
             //println("red");
-          }
-          else if (foeTredt <= 0) {
+            }
+            else if (foeTredt <= 0) {
              //another flash
-            foeTflash2t = foeTflash2int - int(millis()/1000);
-            foeTflash2time = nf(foeTflash2t, 3);
-            text(foeTflash2time, width/2, height - 200);
+              foeTflash2t = foeTflash2int - int(millis()/1000);
+              foeTflash2time = nf(foeTflash2t, 3);
+              text(foeTflash2time, width/2, height - 200);
             //println("red");
 
-            if (foeTflash2t > 0) {
+              if (foeTflash2t > 0) {
                               //this image plays the whole time
-              image(foetutorial, foetutorialX, foetutorialY, foetutorialSizeX, foetutorialSizeY);
+                image(foetutorial, foetutorialX, foetutorialY, foetutorialSizeX, foetutorialSizeY);
                                 //enemy interupt here
                                 //8w
               //glitch part 2
@@ -1620,45 +1621,49 @@ void draw() {
                 //foeTdisapp = false;
                 //foeTAlive = true;
               //}
-              foeTFlash = true;
-            }
-            else if (foeTflash2t <= 0 && foeTInterupt == false) {
+                foeTFlash = true;
+              }
+              else if (foeTflash2t <= 0 && foeTInterupt == false) {
               //println("flash2");
-              if (shield == true) {
-                foeTAttack = false;
-                attackBlocked = true;
+                if (shield == true) {
+                  foeTAttack = false;
+                  attackBlocked = true;
                 
                   //trying puting green filter here
-                foeTinterval = int(millis()/1000) + 5;
-                foeTwhiteint = int(millis()/1000) + 3; //maybe feed more
-                foeTflashint = int(millis()/1000) + 3;
-                foeTredint = int(millis()/1000) + 3; //maybe feed more
-                foeTflash2int = int(millis()/1000) + 3;
-              }
-              else if (shield == false) {
+                  foeTinterval = int(millis()/1000) + 5;
+                  foeTwhiteint = int(millis()/1000) + 3; //maybe feed more
+                  foeTflashint = int(millis()/1000) + 3;
+                  foeTredint = int(millis()/1000) + 3; //maybe feed more
+                  foeTflash2int = int(millis()/1000) + 3;
+                }
+                else if (shield == false) {
                   //image(foe1, foe1CoordX, foe1CoordY - 30, foe1SizeX, foe1SizeY);
                 
-                playerAttacked = true;
+                  playerAttacked = true;
                 //foeT2disapp = true;
                 //foeT3disapp = true;
                 //foeTAlive = true;
-                foeT2Alive = false;
-                foeT3Alive = false;
+                  foeT2Alive = false;
+                  foeT3Alive = false;
                 //println("hit"); //not playing at all                  
                     
-                foeTinterval = int(millis()/1000) + 5;
+                  foeTinterval = int(millis()/1000) + 5;
                     //do I still need these
                     //yes and making them all 3 
-                foeTwhiteint = int(millis()/1000) + 3; //maybe feed more
-                foeTflashint = int(millis()/1000) + 3;
-                foeTredint = int(millis()/1000) + 3; //maybe feed more
-                foeTflash2int = int(millis()/1000) + 3;
-              } 
-              foeTFlash = false;
-            }
-          }                  
-        }
-      }        
+                  foeTwhiteint = int(millis()/1000) + 3; //maybe feed more
+                  foeTflashint = int(millis()/1000) + 3;
+                  foeTredint = int(millis()/1000) + 3; //maybe feed more
+                  foeTflash2int = int(millis()/1000) + 3;
+                } 
+                foeTFlash = false;
+              }
+            }                  
+          }
+        }        
+      }
+      else if (foeTHP <= 0) {
+        foeTAttack = false;
+      }
         //playerAttacked = true;
         //replenish here
         //replenish in foe1Alive == true if attack shielded
@@ -1947,7 +1952,7 @@ void draw() {
           //image(foetutorial, foetutorialX, foetutorialY, foetutorialSizeX, foetutorialSizeY);
         //} 
         //part 1
-        if (foeTAttack == false) {
+        if (foeTAttack == false && foeTHP > 0) {
             //foe1interval is always 0
             //feed white and red here?
             //trying not to loop
@@ -2197,7 +2202,7 @@ void mousePressed () {
       titlePage = false;
       message1 = true;
       minim.stop();
-      player = minim.loadFile("Intro and Tutorial.mp3", 800);
+      player = minim.loadFile("Intro and Tutorial.mp3", 700);
       player.play();
       //-15 adjusts the sound, adjust higher for higher sound
       player.shiftGain(player.getGain(),-15,FADE);
@@ -2512,19 +2517,19 @@ void mousePressed () {
                 textSize(32);
                 image(background, 0, -15, width, height);
                 //create if cases only when foes are alive
-                if (foeTAlive == true) {
+                if (foeTHP > 0) {
                   image(foetutorial, foetutorialX - 10, foetutorialY - 60, foetutorialSizeX * 1.1, foetutorialSizeY * 1.1);
                   image(musicNote2, foetutorialX + 5, foetutorialY - 60, 100, 100);
                   text("  " + 15, foetutorialX + foetutorialSizeX/5, foetutorialY - 60);
                   foeTHP -= 15;
                 }
-                if (foeT2Alive == true) {
+                if (foeTHP > 0) {
                   image(foeT2, foeT2X - 10, foeT2Y - 60, foeT2SizeX * 1.1, foeT2SizeY * 1.1);
                   image(musicNote2, foeT2X + 5, foeT2Y - 60, 100, 100);
                   text("  " + 15, foeT2X + foeT2SizeX/5, foeT2Y - 60);
                   foeT2HP -= 15;
                 }
-                if (foeT3Alive == true) {
+                if (foeT3HP > 0) {
                   image(foeT3, foeT3X - 10, foeT3Y - 60, foeT3SizeX * 1.1, foeT3SizeY * 1.1);
                   image(musicNote2, foeT3X + 5, foeT3Y - 60, 100, 100);
                   text("  " + 15, foeT3X + foeT3SizeX/5, foeT3Y - 60);
