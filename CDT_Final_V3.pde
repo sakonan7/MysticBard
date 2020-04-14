@@ -128,7 +128,7 @@ int foeT2HP = 150;
 int foeT3HP = 150;
 int playerHP = 100;
 
-int damage = 150;
+int damage = 10;
 int tromboneDamage = 0;//15
 //int big damage
 float HPbar = 600;
@@ -587,16 +587,16 @@ void draw() {
     fill(#FFFFFF);
     //center text
     //move 100 down
-    text("Music" + "\n", 470, 265);     
+    text("Music" + "\n", 470, 285);     
     textFont(Font1);
     fill(#FFFFFF);
     ///Title Theme
-    text("Title Theme (Final Fantasy I) by Nobuo Uematsu", 200, 325);
-    text("Reclamation (Fire Emblem: Shadow Dragon)", 225, 375);
-    text("by Yuka Tsujiyoko", 410, 425);
-    text("Battle 1 (Final Fantasy IV) by Nobuo Uematsu", 220, 475);
-    text("Victory (Final Fantasy VII) by Nobuo Uematsu", 220, 525);
-    text("Dead Music (Final Fantasy I) by Nobuo Uematsu", 200, 575);
+    text("Title Theme (Final Fantasy I) by Nobuo Uematsu", 200, 345);
+    text("Reclamation (Fire Emblem: Shadow Dragon)", 225, 395);
+    text("by Yuka Tsujiyoko", 410, 445);
+    text("Battle 1 (Final Fantasy IV) by Nobuo Uematsu", 220, 495);
+    text("Victory (Final Fantasy VII) by Nobuo Uematsu", 220, 545);
+    text("Dead Music (Final Fantasy I) by Nobuo Uematsu", 200, 595);
     //Text
     textSize(35);
     textFont(Font1);
@@ -1655,7 +1655,7 @@ void draw() {
                   foeTredint = int(millis()/1000) + 3; //maybe feed more
                   foeTflash2int = int(millis()/1000) + 3;
                 } 
-                foeTFlash = false;
+                foeTFlash = false; //foe delivers attack and 
               }
             }                  
           }
@@ -2414,17 +2414,12 @@ void mousePressed () {
             monsterTrombone = false; //reset
             //if case
             if (firstBlast == true) {
-              
-              player2 = minim2.loadFile("firstTrumpet.mp3", 500);
-              player2.play();
-              player2.shiftGain(player2.getGain(), -30,FADE);
+             
               firstBlast = false;
               secondBlast = true;
             }
             else if (secondBlast == true) {
-              player2 = minim2.loadFile("secondTrumpet.mp3", 500);
-              player2.play();
-              player2.shiftGain(player2.getGain(), -30,FADE);
+
               firstBlast = true;
               secondBlast = false;
             }
@@ -2456,41 +2451,7 @@ void mousePressed () {
               //foeTredint = int(millis()/1000) + 3; 
               //foeTflash2int = int(millis()/1000) + 3;            
             //}            
-            if (foeTFlash == true && foeTattacked == true) {
-              println("very true");
-              //foeTattacked = true;
-              foeTAttack = false;
-              foeTAlive = true;
-              foeTInterupt = true; //gotta check if this still triggers if case in
-              foeTFlash = false;
-              //foeTattacked = false;
-              //foeTInterupt = false; //Put this in FoeTAttack?
-              foeTinterval = int(millis()/1000) + 5;
-              //do I still need these
-                    //yes and making them all 3 
-              foeTwhiteint = int(millis()/1000) + 3; //maybe feed more
-              foeTflashint = int(millis()/1000) + 3;
-              foeTredint = int(millis()/1000) + 3; //maybe feed more
-              foeTflash2int = int(millis()/1000) + 3;              
-              //FoeTAttack 
-              //maybe try using a different player
-              player2 = minim2.loadFile("violinFlinch.mp3", 500);
-              player2.play();
-              //player2.shiftGain(player2.getGain(), -30,FADE);              
-            }        
-            //changed from foeTInterupt == false
-            else if (foeTFlash == false) {
-              //println("No Flash");
-              player2 = minim2.loadFile("violin.mp3", 400);
-              player2.play();
-              //player2.shiftGain(player2.getGain(), -20,FADE);
-              //println(foe1HP); //nothing printing
-            }
-            if (foeTInterupt == true) {
-              foeTInterupt = false;
-              foeTattacked = false;
-              println("Uninterupt");        
-            }            
+            
             
             if (shield == true) {
               shield = false;
@@ -2584,6 +2545,35 @@ void mousePressed () {
                 rect(13, height - 148, 235, 135, 8);
                 foeTattacked = true;
                 monsterTrombone = true;
+                player2 = minim2.loadFile("firstTrumpet.mp3", 500);
+                player2.play();
+                player2.shiftGain(player2.getGain(), -30,FADE); 
+                if (foeTFlash == true && foeTattacked == true) {
+                  println("very true");
+                  //foeTattacked = true;
+                  foeTAttack = false;
+                  foeTAlive = true;
+                  foeTInterupt = true; //gotta check if this still triggers if case in
+                  foeTFlash = false;
+              //foeTattacked = false;
+              //foeTInterupt = false; //Put this in FoeTAttack?
+                  foeTinterval = int(millis()/1000) + 5;
+              //do I still need these
+                    //yes and making them all 3 
+                  foeTwhiteint = int(millis()/1000) + 3; //maybe feed more
+                  foeTflashint = int(millis()/1000) + 3;
+                  foeTredint = int(millis()/1000) + 3; //maybe feed more
+                  foeTflash2int = int(millis()/1000) + 3;              
+
+              //player2.shiftGain(player2.getGain(), -30,FADE);              
+                }        
+            //changed from foeTInterupt == false
+
+                if (foeTInterupt == true) {
+                  foeTInterupt = false;
+                  foeTattacked = false;
+                  println("Uninterupt");        
+                }                
               }              
             }
             if (secondBlast == true) {
@@ -2617,6 +2607,35 @@ void mousePressed () {
 
                 foeTattacked = true;
                 monsterTrombone = true;
+                player2 = minim2.loadFile("secondTrumpet.mp3", 500);
+                player2.play();
+                player2.shiftGain(player2.getGain(), -30,FADE); 
+                if (foeTFlash == true && foeTattacked == true) {
+                  println("very true");
+              //foeTattacked = true;
+                  foeTAttack = false;
+                  foeTAlive = true;
+                  foeTInterupt = true; //gotta check if this still triggers if case in
+                  foeTFlash = false;
+              //foeTattacked = false;
+              //foeTInterupt = false; //Put this in FoeTAttack?
+                  foeTinterval = int(millis()/1000) + 5;
+              //do I still need these
+                    //yes and making them all 3 
+                  foeTwhiteint = int(millis()/1000) + 3; //maybe feed more
+                  foeTflashint = int(millis()/1000) + 3;
+                  foeTredint = int(millis()/1000) + 3; //maybe feed more
+                  foeTflash2int = int(millis()/1000) + 3;              
+
+              //player2.shiftGain(player2.getGain(), -30,FADE);              
+                }        
+              //changed from foeTInterupt == false
+
+                if (foeTInterupt == true) {
+                  foeTInterupt = false;
+                  foeTattacked = false;
+                  println("Uninterupt");        
+                }                
               }
               if (mouseX <= foeT2SizeX + foeT2X + 140 && mouseX >= foeT2X - 140
               && (mouseY <= foeT2SizeY + foeT2Y + 140 && mouseY >= foeT2Y - 140) && foeT2HP > 0) { 
@@ -2647,6 +2666,9 @@ void mousePressed () {
                 fill(#E505FF);
 
                 monsterTrombone = true;
+                player2 = minim2.loadFile("secondTrumpet.mp3", 500);
+                player2.play();
+                player2.shiftGain(player2.getGain(), -30,FADE);                
               }
               if (mouseX <= foeT3SizeX + foeT3X + 140 && mouseX >= foeT3X - 140
               && (mouseY <= foeT3SizeY + foeT3Y + 140 && mouseY >= foeT3Y - 140) && foeT3HP > 0) { 
@@ -2677,6 +2699,9 @@ void mousePressed () {
                 fill(#E505FF);
               
                 monsterTrombone = true;
+                player2 = minim2.loadFile("secondTrumpet.mp3", 500);
+                player2.play();
+                player2.shiftGain(player2.getGain(), -30,FADE);                
               }              
             }
      
@@ -2700,8 +2725,12 @@ void mousePressed () {
         //ie music
         //use violin cancel 
         //9w
+        //keeping this code to deduct from violin
+        //and to interrupt shield
           if (monsterViolin == true) {
-            
+            monsterViolin = false; //reset
+            //println(foeTattacked + " foe Attacked? Violin");
+            //println(foeTFlash + " flash");
             //gonna need to do an or for all the other foes
             //code, use or for all cases if a foe is interupted or not interupted
             //works because violin is single target
@@ -2712,41 +2741,7 @@ void mousePressed () {
               //println(foe1HP); //nothing printing
             //}
             //change this too before foeTflash2
-            if (foeTFlash == true && foeTattacked == true) {
-              println("very true");
-              //foeTattacked = true;
-              foeTAttack = false;
-              foeTAlive = true;
-              foeTInterupt = true; //gotta check if this still triggers if case in
-              foeTFlash = false;
-              //foeTattacked = false;
-              //foeTInterupt = false; //Put this in FoeTAttack?
-              foeTinterval = int(millis()/1000) + 5;
-              //do I still need these
-                    //yes and making them all 3 
-              foeTwhiteint = int(millis()/1000) + 3; //maybe feed more
-              foeTflashint = int(millis()/1000) + 3;
-              foeTredint = int(millis()/1000) + 3; //maybe feed more
-              foeTflash2int = int(millis()/1000) + 3;              
-              //FoeTAttack 
-              //maybe try using a different player
-              player2 = minim2.loadFile("violinFlinch.mp3", 500);
-              player2.play();
-              //player2.shiftGain(player2.getGain(), -30,FADE);              
-            }        
-            //changed from foeTInterupt == false
-            else if (foeTFlash == false) {
-              //println("No Flash");
-              player2 = minim2.loadFile("violin.mp3", 400);
-              player2.play();
-              //player2.shiftGain(player2.getGain(), -20,FADE);
-              //println(foe1HP); //nothing printing
-            }
-            if (foeTInterupt == true) {
-              foeTInterupt = false;
-              foeTattacked = false;
-              println("Uninterupt");        
-            }            
+            
             //maybe create cases where it's foeTFlash != true && foeTAttacked
             //if (foeTInterupt == true) {
               
@@ -2785,7 +2780,6 @@ void mousePressed () {
               violinDrained = true;
               violinReplenish = int(millis()/1000) + 10;
             }
-            monsterViolin = false; //reset
           }
           //use stages here to determine where the hit boxes are
           //if tutorialStage == true
@@ -2816,7 +2810,45 @@ void mousePressed () {
               fill(#E505FF);
               //maybe do this if flash2 didn't reach zero yet
               foeTattacked = true;
+              println(foeTattacked + " foe Attacked?");
               monsterViolin = true;
+              println(monsterViolin + "violin");
+              
+              if (foeTFlash == true && foeTattacked == true) {
+                println("very true");
+              //foeTattacked = true;
+                foeTAttack = false;
+                foeTAlive = true;
+                foeTInterupt = true; //gotta check if this still triggers if case in
+                foeTFlash = false;
+              //foeTattacked = false;
+              //foeTInterupt = false; //Put this in FoeTAttack?
+                foeTinterval = int(millis()/1000) + 5;
+              //do I still need these
+                    //yes and making them all 3 
+                foeTwhiteint = int(millis()/1000) + 3; //maybe feed more
+                foeTflashint = int(millis()/1000) + 3;
+                foeTredint = int(millis()/1000) + 3; //maybe feed more
+                foeTflash2int = int(millis()/1000) + 3;              
+              //FoeTAttack 
+              //maybe try using a different player
+                player2 = minim2.loadFile("violinFlinch.mp3", 500);
+                player2.play();
+              //player2.shiftGain(player2.getGain(), -30,FADE);              
+              }        
+            //changed from foeTInterupt == false
+              else if (foeTFlash == false) {
+              //println("No Flash");
+                player2 = minim2.loadFile("violin.mp3", 400);
+                player2.play();
+              //player2.shiftGain(player2.getGain(), -20,FADE);
+              //println(foe1HP); //nothing printing
+              }
+              if (foeTInterupt == true) {
+                foeTInterupt = false;
+                foeTattacked = false;
+                //println("Uninterupt");        
+              }              
             }
             if (mouseX <= foeT2SizeX + foeT2X && mouseX >= foeT2X
             && (mouseY <= foeT2SizeY + foeT2Y && mouseY >= foeT2Y) && foeT2HP > 0) { 
@@ -2843,6 +2875,8 @@ void mousePressed () {
               text("  " + damage, foeT2X + foeT2SizeX/4, foeT2Y - foeT2Y/11);
               fill(#E505FF);
               monsterViolin = true;
+              player2 = minim2.loadFile("violin.mp3", 400);
+              player2.play();              
             } 
             if (mouseX <= foeT3SizeX + foeT3X && mouseX >= foeT3X
             && (mouseY <= foeT3SizeY + foeT3Y && mouseY >= foeT3Y) && foeT3HP > 0) { 
@@ -2869,6 +2903,8 @@ void mousePressed () {
               text("  " + damage, foeT3X + foeT3SizeX/4, foeT3Y - foeT3Y/11);
               fill(#E505FF);
               monsterViolin = true;
+              player2 = minim2.loadFile("violin.mp3", 400);
+              player2.play();              
             }            
           }
           //stage1  
