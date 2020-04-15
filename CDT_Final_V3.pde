@@ -1250,13 +1250,13 @@ void draw() {
             foeTdisapp = true;
             foeT2disapp = true;
             foeT3disapp = true;
-            if (foeTAlive == true) {
+            if (foeTHP > 0) {
               image(foetutorial, foetutorialX, foetutorialY, foetutorialSizeX, foetutorialSizeY);
             }
-            if (foeT2Alive == true) {
+            if (foeT2HP > 0) {
               image(foeT2, foeT2X, foeT2Y, foeT2SizeX, foeT2SizeY);
             }
-            if (foeT3Alive == true) {
+            if (foeT3HP > 0) {
               image(foeT3, foeT3X, foeT3Y, foeT3SizeX, foeT3SizeY);
             }
           }              
@@ -1293,13 +1293,13 @@ void draw() {
             foeTdisapp = true;
             foeT2disapp = true;
             foeT3disapp = true;                
-            if (foeTAlive == true) {
+            if (foeTHP > 0) {
               image(foetutorial, foetutorialX, foetutorialY - 20, foetutorialSizeX, foetutorialSizeY);
             }
-            if (foeT2Alive == true) {
+            if (foeT2HP > 0) {
               image(foeT2, foeT2X, foeT2Y - 20, foeT2SizeX, foeT2SizeY);
             }
-            if (foeT3Alive == true) {
+            if (foeT3HP > 0) {
               image(foeT3, foeT3X, foeT3Y - 20, foeT3SizeX, foeT3SizeY);
             }
           } 
@@ -1346,7 +1346,7 @@ void draw() {
         if (foe5Attack == true) {
           attackBlocked = true;
         }
-        if (foeTAttack == true) {
+        if (foeTFlash == true) {
           attackBlocked = true;
         }
    
@@ -1471,7 +1471,6 @@ void keyPressed () {
 
     messageOver = true;
     tutorialStage = true;
-    println("skipped");
     minim.stop();
     player = minim.loadFile("Battle.mp3", 800);
     player.play();
@@ -1480,11 +1479,9 @@ void keyPressed () {
   }  
   if ((key == 'w' || key == 'W')) {
     weapon = "Violin";
-    println("Violin");
   }
   if (key == 'a' || key == 'A') {
     weapon = "Trombone";
-    println("Trombone");
   }
 }  
 void mousePressed () {
@@ -1603,7 +1600,6 @@ void mousePressed () {
       messageLast = false;
       messageOver = true;
       tutorialStage = true;
-      println("over");
       minim.stop();
       player = minim.loadFile("Battle.mp3", 800);
       player.play();
@@ -1897,12 +1893,9 @@ void mousePressed () {
               text("  " + damage, foetutorialX + foetutorialSizeX/4, foetutorialY - foetutorialY/11);
               fill(#E505FF);
               foeTattacked = true;
-              println(foeTattacked + " foe Attacked?");
               monsterViolin = true;
-              println(monsterViolin + "violin");
               
               if (foeTFlash == true && foeTattacked == true) {
-                println("very true");
                 foeTAttack = false;
                 foeTAlive = true;
                 foeTInterupt = true; 
